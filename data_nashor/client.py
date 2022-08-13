@@ -1,7 +1,5 @@
 import subprocess
-
-game_dir = 'C:/Riot Games/League of Legends'
-replay_dir = 'C:/Users/James/Documents/League of Legends/Replays'
+import os
 
 
 class ReplayClient():
@@ -12,16 +10,16 @@ class ReplayClient():
 
     """
 
-    def __init__(self, game_dir, replay_dir):
+    def __init__(self, game_dir, replay_dir, replay_file_name):
         self.game_dir = game_dir
         self.replay_dir = replay_dir
+        self.replay_file_name = replay_file_name
 
     def run_client(self):
-        subprocess.Popen(
+        process = subprocess.Popen(
             [
                 self.game_dir + '/Game/League of Legends.exe',
-                # TODO dynamically get replay file name
-                self.replay_dir + '/KR-6072648122.rofl',
+                os.path.join(self.replay_dir, self.replay_file_name),
                 '-GameBaseDir=' + self.game_dir,
                 '-Region=KR',  # TODO set region dynamically
                 '-PlatformID=KR',
@@ -36,5 +34,7 @@ class ReplayClient():
             ],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            cwd=game_dir + r'\Game'
+            cwd=self.game_dir + r'\Game'
         )
+
+        return process
