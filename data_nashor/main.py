@@ -5,6 +5,7 @@ from time import sleep
 
 from client import ReplayClient
 from metadata import MetaDataParser
+from utils.calc_gold import calc_gold
 
 
 LIVE_CLIENT_API_ROOT = 'https://127.0.0.1:2999/liveclientdata/'
@@ -83,6 +84,8 @@ def parse_replay(replay_file_name):
 
     with open('result' + replay_file_name.split('.')[0] + '.json', 'w', encoding='UTF-8') as fp:
         json.dump(result, fp, ensure_ascii=False)
+    calc_gold('result' + replay_file_name.split('.')
+              [0] + '.json', 'resources/item.json')
 
 
 def main():
