@@ -1,2 +1,3 @@
 .vscode
 pipfile.lock
+__pycache__
