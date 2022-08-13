@@ -37,11 +37,11 @@ class MetaDataParser():
         player stat key defaults to
         ['NAME', 'SKIN', 'TEAM', INDIVIDUAL_POSITION', 'WIN']
         """
-        game_length, player_stats = self.get_raw_metadata()
+        player_stats = self.get_raw_metadata()
         metadata_keys = ['NAME', 'SKIN', 'TEAM',
                          'INDIVIDUAL_POSITION', 'WIN'] if not args else args
 
         result = [{key: stat.get(key)
                   for key in metadata_keys} for stat in player_stats]
 
-        return game_length, result
+        return result
