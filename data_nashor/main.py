@@ -38,7 +38,8 @@ def parse_replay(replay_file_name):
 
     game_meta_data = meta_data_parser.parse()
 
-    with open('meta' + replay_file_name.split('.')[0] + '.json', 'w', encoding='UTF-8') as fp:
+    metadata_filename = 'meta' + replay_file_name.split('.')[0] + '.json'
+    with open(metadata_filename, 'w', encoding='UTF-8') as fp:
         json.dump(game_meta_data, fp, ensure_ascii=False)
 
     while True:
@@ -59,7 +60,7 @@ def parse_replay(replay_file_name):
                         {key: champ.get(key) for key in player_data_keys}
                         for champ in data
                     ]})
-                print('Current time: ' + game_time)
+                print('Current time: {}'.format(game_time))
 
                 if game_time == prev_game_time:
                     game_time_count += 1
@@ -82,15 +83,15 @@ def parse_replay(replay_file_name):
                 break
         sleep(0.8)
 
-    with open('result' + replay_file_name.split('.')[0] + '.json', 'w', encoding='UTF-8') as fp:
+    result_data_filename = 'result' + replay_file_name.split('.')[0] + '.json'
+    with open(result_data_filename, 'w', encoding='UTF-8') as fp:
         json.dump(result, fp, ensure_ascii=False)
-    calc_gold('result' + replay_file_name.split('.')
-              [0] + '.json', 'resources/item.json')
+    calc_gold(result_data_filename, 'resources/item.json')
 
 
 def main():
     for replay_file_name in replay_files:
-        print('Parsing ' + replay_file_name)
+        print('Parsing {}'.format(replay_file_name))
         parse_replay(replay_file_name)
         sleep(20)
 
