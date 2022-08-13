@@ -1,5 +1,6 @@
 import json
 
+
 def calc_gold(replay_data_dir, item_data_dir):
     with open(replay_data_dir, encoding='UTF-8') as src:
         source = json.load(src)
