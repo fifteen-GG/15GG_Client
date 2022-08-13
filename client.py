@@ -19,7 +19,7 @@ class ReplayClient():
     def run_client(self):
         subprocess.Popen(
             [
-                self.game_dir + '/Game/League of Legends.exe'
+                self.game_dir + '/Game/League of Legends.exe',
                 # TODO dynamically get replay file name
                 self.replay_dir + '/KR-6072648122.rofl',
                 '-GameBaseDir=' + self.game_dir,
