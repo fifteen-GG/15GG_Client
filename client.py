@@ -36,5 +36,5 @@ class ReplayClient():
             ],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            cwd=game_dir
+            cwd=game_dir + r'\Game'
         )
