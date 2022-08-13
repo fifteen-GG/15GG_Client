@@ -1,11 +1,14 @@
+from utils.calc_gold import calc_gold
+from metadata import MetaDataParser
+from client import ReplayClient
 import os
 import requests
 import json
 from time import sleep
 
-from client import ReplayClient
-from metadata import MetaDataParser
-from utils.calc_gold import calc_gold
+from requests.packages import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 LIVE_CLIENT_API_ROOT = 'https://127.0.0.1:2999/liveclientdata/'
@@ -93,7 +96,7 @@ def main():
     for replay_file_name in replay_files:
         print('Parsing {}'.format(replay_file_name))
         parse_replay(replay_file_name)
-        sleep(20)
+        sleep(10)
 
 
 if __name__ == '__main__':
