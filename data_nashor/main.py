@@ -57,12 +57,36 @@ def parse_replay(replay_file_name):
                 loaded = True
 
             try:
-                result.append({
+                current_timestamp = {
                     'timestamp': game_time,
                     'player_data': [
                         {key: champ.get(key) for key in player_data_keys}
                         for champ in data
-                    ]})
+                    ]}
+
+                for player in current_timestamp['player_data']:
+                    player['items'] = [
+                        {
+                            'itemID': item['itemID'],
+                            'count': item['count']
+                        } for item in player['items']
+                    ]
+
+                    try:
+                        kda = (
+                            player['scores']['kills'] +
+                            player['scores']['assists']
+                        ) / player['scores']['deaths']
+                    except ZeroDivisionError:
+                        kda = 'Perfect'
+
+                    player['KDA'] = kda
+                    player['CS'] = player['scores']['creepScore']
+                    player['WS'] = player['scores']['wardScore']
+
+                    del player['scores']
+
+                result.append(current_timestamp)
                 print('Current time: {}'.format(game_time))
 
                 if game_time == prev_game_time:
