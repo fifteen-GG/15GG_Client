@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 requests = "*"
+bs4 = "*"
 
 [dev-packages]
 autopep8 = "*"
