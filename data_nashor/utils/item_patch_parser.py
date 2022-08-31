@@ -1,10 +1,13 @@
 import json
+import requests
 
 
-def item_patch_parser(src_dir, dest_dir):
-    with open(src_dir, encoding='UTF-8') as item_list:
-        src = json.load(item_list)
-
+def item_patch_parser(patch_num, dest_dir):
+    patch = patch_num
+    url = requests.get(
+        f'https://ddragon.leagueoflegends.com/cdn/{patch_num}/data/ko_KR/item.json')
+    text = url.text
+    src = json.loads(text)
     item_dict = dict()
     data = src['data']
 
