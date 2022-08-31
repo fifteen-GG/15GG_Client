@@ -72,17 +72,9 @@ def parse_replay(replay_file_name):
                         } for item in player['items']
                     ]
 
-                    try:
-                        kda = (
-                            player['scores']['kills'] +
-                            player['scores']['assists']
-                        ) / player['scores']['deaths']
-                    except ZeroDivisionError:
-                        kda = 'Perfect'
-
-                    player['KDA'] = kda
-                    player['CS'] = player['scores']['creepScore']
-                    player['WS'] = player['scores']['wardScore']
+                    player['kills'] = player['scores']['kills']
+                    player['deaths'] = player['scores']['deaths']
+                    player['assists'] = player['scores']['assists']
 
                     del player['scores']
 
