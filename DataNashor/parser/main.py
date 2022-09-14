@@ -7,6 +7,7 @@ import json
 from time import sleep
 
 from requests.packages import urllib3
+from utils.send_serial import send_serial
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -25,7 +26,6 @@ player_data_keys = [
     'items',
     'team',
 ]
-
 
 def parse_replay(replay_file_name):
     client = ReplayClient(game_dir, replay_dir, replay_file_name)
@@ -63,6 +63,8 @@ def parse_replay(replay_file_name):
                         {key: champ.get(key) for key in player_data_keys}
                         for champ in data
                     ]}
+                if 0 < game_time < 30:
+                    send_serial('COM7')
 
                 for player in current_timestamp['player_data']:
                     player['items'] = [
