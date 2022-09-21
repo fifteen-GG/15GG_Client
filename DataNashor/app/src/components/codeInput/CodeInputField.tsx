@@ -27,15 +27,12 @@ export const CodeInputField = () => {
             onChange={(e) => {
               handleInput(e, i);
               if (e.target.value.length >= 1) {
-                ref.current[i + 1]!.focus();
-              }
-              if (e.target.value.length === 0) {
-                ref.current[i]!.focus();
+                if (i < 5) ref.current[i + 1]!.focus();
               }
             }}
             onKeyDown={(e) => {
               if (e.key === 'Backspace' && code[i] === '') {
-                ref.current[i - 1]!.focus();
+                if (i > 0) ref.current[i - 1]!.focus();
               }
             }}
           />
