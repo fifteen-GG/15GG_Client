@@ -29,6 +29,9 @@ export const CodeInputField = () => {
               if (e.target.value.length === 1) {
                 ref.current[i + 1]!.focus();
               }
+              if (e.target.value.length === 0) {
+                ref.current[i - 1]!.focus();
+              }
             }}
           />
         );
