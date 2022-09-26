@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import * as Palette from "../../../assets/colorPalette";
+import styled from 'styled-components';
+import * as Palette from '../../../assets/colorPalette';
 
 const CodeInputWrapper = styled.div`
   box-sizing: border-box;
@@ -58,6 +58,9 @@ const StartAnalysisButton = styled.div`
   font-size: 18px;
   font-weight: 500;
   border-radius: 16px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export {

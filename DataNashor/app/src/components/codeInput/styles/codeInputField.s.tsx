@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import * as Palette from "../../../assets/colorPalette";
+import styled from 'styled-components';
+import * as Palette from '../../../assets/colorPalette';
 
 const CodeInputFieldWrapper = styled.div`
   box-sizing: border-box;
@@ -12,7 +12,6 @@ const CodeInputFieldWrapper = styled.div`
   font-weight: 500;
   justify-content: space-between;
 `;
-
 const InputField = styled.input`
   box-sizing: border-box;
   display: flex;
@@ -24,11 +23,10 @@ const InputField = styled.input`
   align-items: center;
   color: ${Palette.NASHOR_WHITE};
   font-weight: 300;
-  border: 0px;
   border-radius: 8px;
   outline: 0;
   background-color: ${Palette.NASHOR_BLACK_100};
-  font-family: "SUIT";
+  font-family: 'SUIT';
 `;
 
 export { CodeInputFieldWrapper, InputField };
