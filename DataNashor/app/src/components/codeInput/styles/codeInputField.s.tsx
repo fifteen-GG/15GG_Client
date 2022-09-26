@@ -12,7 +12,10 @@ const CodeInputFieldWrapper = styled.div`
   font-weight: 500;
   justify-content: space-between;
 `;
-const InputField = styled.input`
+interface props {
+  codeIsTrue: boolean;
+}
+const InputField = styled.input<props>`
   box-sizing: border-box;
   display: flex;
   width: 48px;
@@ -24,9 +27,25 @@ const InputField = styled.input`
   color: ${Palette.NASHOR_WHITE};
   font-weight: 300;
   border-radius: 8px;
+  border: ${(props) =>
+    `${props.codeIsTrue ? '0' : `1.5px solid ${Palette.NASHOR_RED_ERROR}`}`};
   outline: 0;
   background-color: ${Palette.NASHOR_BLACK_100};
   font-family: 'SUIT';
+  animation: ${(props) =>
+    `${
+      props.codeIsTrue
+        ? 'none'
+        : `vibration 0.1s 4 ;
+  @keyframes vibration {
+    from {
+      transform: rotate(10deg);
+    }
+    to {
+      transform: rotate(-10deg);
+    }`
+    }`}
+  }
 `;
 
 export { CodeInputFieldWrapper, InputField };

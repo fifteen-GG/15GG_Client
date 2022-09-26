@@ -8,6 +8,7 @@ interface propsType {
   code: string[];
   setCode: React.Dispatch<React.SetStateAction<string[]>>;
   codeIsTrue: boolean;
+  setCodeIsTrue: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const CodeInputField = (props: propsType) => {
@@ -15,6 +16,7 @@ export const CodeInputField = (props: propsType) => {
     let updatedCode = [...props.code];
     updatedCode[index] = e.target.value;
     props.setCode(updatedCode);
+    if (props.codeIsTrue === false) props.setCodeIsTrue(true);
   };
 
   const ref = useRef<HTMLInputElement[]>([]);
@@ -40,11 +42,7 @@ export const CodeInputField = (props: propsType) => {
                 if (i > 0) ref.current[i - 1]!.focus();
               }
             }}
-            style={
-              props.codeIsTrue
-                ? { border: '0' }
-                : { border: `1.5px solid ${Palette.NASHOR_RED_ERROR}` }
-            }
+            codeIsTrue={props.codeIsTrue}
           />
         );
       })}
