@@ -36,13 +36,13 @@ const InputField = styled.input<props>`
     `${
       props.codeIsTrue
         ? 'none'
-        : `vibration 0.1s 4 ;
-  @keyframes vibration {
+        : `slidein 0.1s 3 ;
+  @keyframes slidein {
     from {
-      transform: rotate(10deg);
+      margin-left: 2%;
     }
     to {
-      transform: rotate(-10deg);
+      margin-right: 2%;
     }`
     }`}
   }
