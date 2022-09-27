@@ -39,10 +39,10 @@ const InputField = styled.input<props>`
         : `slidein 0.1s 3 ;
   @keyframes slidein {
     from {
-      margin-left: 2%;
+      margin-left: 5px;
     }
     to {
-      margin-right: 2%;
+      margin-right: 5px;
     }`
     }`}
   }
