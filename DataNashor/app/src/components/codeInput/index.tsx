@@ -12,16 +12,19 @@ import {
 const CodeInputHeader = () => {
   return <CodeInputHeaderWrapper>데이터 코드 입력</CodeInputHeaderWrapper>;
 };
-export const CodeInput = () => {
+interface propsType {
+  codeIsTrue: number;
+  setCodeIsTrue: React.Dispatch<React.SetStateAction<number>>; 
+}
+export const CodeInput = (props : propsType) => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const dummyCode = ['1', '2', 'a', 'b', 'c', '3'];
-  const [codeIsTrue, setCodeIsTrue] = useState(true);
 
   const onClick = () => {
     {
       JSON.stringify(code) === JSON.stringify(dummyCode)
-        ? setCodeIsTrue(true)
-        : setCodeIsTrue(false);
+        ? props.setCodeIsTrue(1)
+        : props.setCodeIsTrue(0);
     }
   };
 
@@ -34,8 +37,8 @@ export const CodeInput = () => {
       <CodeInputField
         setCode={setCode}
         code={code}
-        codeIsTrue={codeIsTrue}
-        setCodeIsTrue={setCodeIsTrue}
+        codeIsTrue={props.codeIsTrue}
+        setCodeIsTrue={props.setCodeIsTrue}
       />
       <CodeHelpMsg>
         어디서 코드를 발급받을 수 있나요? <CodeHelpLink>바로가기</CodeHelpLink>

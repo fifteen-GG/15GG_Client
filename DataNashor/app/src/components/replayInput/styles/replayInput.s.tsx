@@ -5,7 +5,6 @@ const ReplayInputWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   width: 404px;
-  margin-right: 16px; // TODO Fix CSS
   flex-direction: column;
   border-radius: 16px;
   background-color: ${Palette.NASHOR_GRAY};

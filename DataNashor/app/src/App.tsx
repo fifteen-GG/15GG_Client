@@ -3,6 +3,8 @@ import * as Palette from "./assets/colorPalette";
 import { CodeInput } from "./components/codeInput";
 import { Header } from "./components/header";
 import { ReplayInput } from "./components/replayInput";
+import { TimeOutput } from "./components/codeInput/AnalysisTime";
+import { useState } from "react";
 
 const AppWrapper = styled.div`
   box-sizing: border-box;
@@ -18,17 +20,24 @@ const ContentWrapper = styled.div`
   display: flex;
   height: 430px;
   width: 800px;
-  padding: 16px;
+  padding: 16px 16px 16px 16px;
   padding-top: 20px;
+  justify-content: space-between
 `;
 
 const App = () => {
+  const [codeIsTrue, setCodeIsTrue] = useState(2);
+
   return (
     <AppWrapper>
       <Header />
       <ContentWrapper>
         <ReplayInput />
-        <CodeInput />
+        {codeIsTrue === 1 ? <TimeOutput /> : 
+        <CodeInput 
+        codeIsTrue={codeIsTrue}
+        setCodeIsTrue={setCodeIsTrue}
+        />}
       </ContentWrapper>
     </AppWrapper>
   );

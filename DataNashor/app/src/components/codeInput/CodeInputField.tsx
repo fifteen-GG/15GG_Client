@@ -7,8 +7,8 @@ import * as Palette from '../../assets/colorPalette';
 interface propsType {
   code: string[];
   setCode: React.Dispatch<React.SetStateAction<string[]>>;
-  codeIsTrue: boolean;
-  setCodeIsTrue: React.Dispatch<React.SetStateAction<boolean>>;
+  codeIsTrue: number;
+  setCodeIsTrue: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const CodeInputField = (props: propsType) => {
@@ -16,7 +16,7 @@ export const CodeInputField = (props: propsType) => {
     let updatedCode = [...props.code];
     updatedCode[index] = e.target.value;
     props.setCode(updatedCode);
-    if (props.codeIsTrue === false) props.setCodeIsTrue(true);
+    if (props.codeIsTrue === 0) props.setCodeIsTrue(2);
   };
 
   const ref = useRef<HTMLInputElement[]>([]);
