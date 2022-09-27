@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import * as Palette from "../../../assets/colorPalette";
+import styled from 'styled-components';
+import * as Palette from '../../../assets/colorPalette';
 
 export const TimeOutputWrapper = styled.div`
   box-sizing: border-box;
@@ -15,10 +15,19 @@ export const OutputFieldWrapper = styled.div`
   display: flex;
   height: 56px;
   width: 278px;
-  margin: 139px 19px 14px 19px;
+  margin: 139px 19px 12px 19px;
   align-items: center;
+  justify-content: space-between;
 `;
-export const OutputField = styled.div`
+export const OutputFieldWithColonWrapper = styled.div`
+  display: flex;
+  width: 75.5px;
+  font-size: 24px;
+  color: ${Palette.NASHOR_WHITE};
+  align-items: center;
+  justify-content: space-between;
+`;
+export const OutputField = styled.input`
   box-sizing: border-box;
   display: flex;
   width: 61.5px;
@@ -30,8 +39,8 @@ export const OutputField = styled.div`
   color: ${Palette.NASHOR_WHITE};
   font-weight: 300;
   border-radius: 8px;
+  border: 0;
   background-color: ${Palette.NASHOR_BLACK_100};
-  margin-right: 6px;
 `;
 export const Colon = styled.div`
   display: flex;

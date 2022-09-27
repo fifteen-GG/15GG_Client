@@ -1,8 +1,7 @@
 import { buildTimeValue } from '@testing-library/user-event/dist/utils';
 import { useRef } from 'react';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { CodeInputFieldWrapper, InputField } from './styles/codeInputField.s';
-import * as Palette from '../../assets/colorPalette';
 
 interface propsType {
   code: string[];
