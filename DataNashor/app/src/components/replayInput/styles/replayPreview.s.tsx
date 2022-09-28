@@ -17,4 +17,5 @@ export const ReplayPreviewWrapper = styled.div<propsType>`
   align-items: center;
   color: ${Palette.NASHOR_WHITE};
   background-image: url(${BackgroundImg});
+  font-weight: 500;
 `;
