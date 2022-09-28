@@ -16,6 +16,7 @@ export const ReplayPreviewWrapper = styled.div<propsType>`
   justify-content: ${(props) => `${props.sort === true ? 'center' : 'none'}`};
   align-items: center;
   color: ${Palette.NASHOR_WHITE};
-  background-image: url(${BackgroundImg});
+  background-image: ${(props) =>
+    `${props.sort === false ? `url(${BackgroundImg});` : 'none'}`};
   font-weight: 500;
 `;

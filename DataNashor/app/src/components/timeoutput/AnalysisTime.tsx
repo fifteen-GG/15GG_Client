@@ -17,18 +17,10 @@ export const TimeOutput = () => {
           if (i === 2)
             return (
               <OutputFieldWithColonWrapper>
-                :
-                <OutputField
-                  type={'text'}
-                  maxLength={1}
-                  key={i}
-                  value={time[i]}
-                />
+                :<OutputField>{time[i]}</OutputField>
               </OutputFieldWithColonWrapper>
             );
-          return (
-            <OutputField type={'text'} maxLength={1} key={i} value={time[i]} />
-          );
+          return <OutputField>{time[i]}</OutputField>;
         })}
       </OutputFieldWrapper>
       <Announcement>실시간 분석 진행중...</Announcement>

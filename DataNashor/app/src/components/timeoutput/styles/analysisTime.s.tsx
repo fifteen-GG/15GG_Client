@@ -27,7 +27,7 @@ export const OutputFieldWithColonWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-export const OutputField = styled.input`
+export const OutputField = styled.div`
   box-sizing: border-box;
   display: flex;
   width: 61.5px;
@@ -37,7 +37,7 @@ export const OutputField = styled.input`
   text-align: center;
   align-items: center;
   color: ${Palette.NASHOR_WHITE};
-  font-weight: 300;
+  font-weight: 500;
   border-radius: 8px;
   border: 0;
   background-color: ${Palette.NASHOR_BLACK_100};
