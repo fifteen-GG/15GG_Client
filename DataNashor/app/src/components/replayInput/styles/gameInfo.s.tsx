@@ -43,12 +43,23 @@ export const UserImg = styled.img`
   width: 28px;
   height: 28px;
 `;
+enum TeamNameEnum {
+  RED,
+  BLUE,
+}
+interface TeamStatProps {
+  team: TeamNameEnum;
+}
 
-export const UserName = styled.div`
+export const UserName = styled.div<TeamStatProps>`
   display: flex;
   align-items: center;
   width: 82px;
   height: 14px;
   font-size: 14px;
   font-weight: 500;
+  justify-content: ${(props) =>
+    `${props.team === TeamNameEnum.RED ? 'none' : 'right'}`};
 `;
+
+export { TeamNameEnum as Team };

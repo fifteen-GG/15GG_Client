@@ -6,6 +6,7 @@ import {
   UserImgWrapper,
   UserImg,
   UserName,
+  Team,
 } from './styles/gameInfo.s';
 import { useState } from 'react';
 
@@ -43,7 +44,9 @@ export const GameInfo = () => {
                     })}
                   />
                 </UserImgWrapper>
-                <UserName>{RedTeamUserInfo[i].userName}</UserName>
+                <UserName team={Team.RED}>
+                  {RedTeamUserInfo[i].userName}
+                </UserName>
               </UserWrapper>
             );
           })}
@@ -52,7 +55,9 @@ export const GameInfo = () => {
           {RedTeamUserInfo.map((_, i) => {
             return (
               <UserWrapper key={i}>
-                <UserName>{BlueTeamUserInfo[i].userName}</UserName>
+                <UserName team={Team.BLUE}>
+                  {BlueTeamUserInfo[i].userName}
+                </UserName>
                 <UserImgWrapper>
                   <UserImg
                     src={formatChampion({
