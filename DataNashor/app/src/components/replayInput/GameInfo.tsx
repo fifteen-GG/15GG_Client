@@ -14,30 +14,51 @@ export const formatChampion = (data: { championName: string }) => {
 };
 
 export const GameInfo = () => {
-  const [RedTeamUserinfo, setRedTeamUserinfo] = useState([{}, {}, {}, {}, {}]);
+  const [RedTeamUserInfo, setRedTeamUserInfo] = useState([
+    { championName: 'Lux', userName: '드레이븐1호기' },
+    { championName: 'Sona', userName: '지방간' },
+    { championName: 'Gangplank', userName: '아랫집김서방' },
+    { championName: 'Darius', userName: '이진형' },
+    { championName: 'Rumble', userName: '브랜드마크' },
+  ]);
+  const [BlueTeamUserInfo, setBlueTeamUserInfo] = useState([
+    { championName: 'Malzahar', userName: '시험다음주' },
+    { championName: 'Malphite', userName: '슈퍼섹시보이' },
+    { championName: 'MissFortune', userName: '정잭영' },
+    { championName: 'Soraka', userName: '지녕지뇽지녕' },
+    { championName: 'Amumu', userName: '나는누구게' },
+  ]);
 
   return (
     <ReplayPreviewWrapper sort={false}>
       <UsersInfoWrapper>
         <TeamWrapper>
-          {RedTeamUserinfo.map((_, i) => {
+          {RedTeamUserInfo.map((_, i) => {
             return (
               <UserWrapper key={i}>
                 <UserImgWrapper>
-                  <UserImg src={formatChampion({ championName: 'Sona' })} />
+                  <UserImg
+                    src={formatChampion({
+                      championName: `${RedTeamUserInfo[i].championName}`,
+                    })}
+                  />
                 </UserImgWrapper>
-                <UserName>드레이븐{i + 1}호기</UserName>
+                <UserName>{RedTeamUserInfo[i].userName}</UserName>
               </UserWrapper>
             );
           })}
         </TeamWrapper>
         <TeamWrapper>
-          {RedTeamUserinfo.map((_, i) => {
+          {RedTeamUserInfo.map((_, i) => {
             return (
               <UserWrapper key={i}>
-                <UserName>드레이븐{i + 1}호기</UserName>
+                <UserName>{BlueTeamUserInfo[i].userName}</UserName>
                 <UserImgWrapper>
-                  <UserImg src={formatChampion({ championName: 'Sona' })} />
+                  <UserImg
+                    src={formatChampion({
+                      championName: `${BlueTeamUserInfo[i].championName}`,
+                    })}
+                  />
                 </UserImgWrapper>
               </UserWrapper>
             );
