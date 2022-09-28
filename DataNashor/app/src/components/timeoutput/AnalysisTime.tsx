@@ -4,7 +4,6 @@ import {
   OutputFieldWrapper,
   OutputFieldWithColonWrapper,
   OutputField,
-  Colon,
   Announcement,
 } from './styles/analysisTime.s';
 

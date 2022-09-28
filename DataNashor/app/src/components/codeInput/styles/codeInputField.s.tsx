@@ -25,10 +25,12 @@ const InputField = styled.input<props>`
   text-align: center;
   align-items: center;
   color: ${Palette.NASHOR_WHITE};
-  font-weight: 300;
+  font-weight: 500;
   border-radius: 8px;
   border: ${(props) =>
-    `${props.codeIsTrue === 2 ? '0' : `1.5px solid ${Palette.NASHOR_RED_ERROR}`}`};
+    `${
+      props.codeIsTrue === 2 ? '0' : `1.5px solid ${Palette.NASHOR_RED_ERROR}`
+    }`};
   outline: 0;
   background-color: ${Palette.NASHOR_BLACK_100};
   font-family: 'SUIT';

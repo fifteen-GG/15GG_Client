@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import * as Palette from "../../../assets/colorPalette";
+import styled from 'styled-components';
+import * as Palette from '../../../assets/colorPalette';
 
-const ReplayInputWrapper = styled.div`
+export const ReplayInputWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   width: 404px;
@@ -11,7 +11,7 @@ const ReplayInputWrapper = styled.div`
   padding: 0px 16px;
 `;
 
-const ReplayInputHeader = styled.div`
+export const ReplayInputHeader = styled.div`
   box-sizing: border-box;
   padding: 16px 0;
   display: flex;
@@ -20,7 +20,18 @@ const ReplayInputHeader = styled.div`
   align-items: center;
   color: ${Palette.NASHOR_WHITE};
   font-size: 18px;
-  font-weight: 400;
 `;
 
-export { ReplayInputWrapper, ReplayInputHeader };
+export const RealTimeInfo = styled.div`
+  display: flex;
+  width: 33px;
+  height: 14px;
+  background-color: ${Palette.NASHOR_GREEN};
+  font-size: 8px;
+  color: ${Palette.NASHOR_WHITE};
+  margin-left: 4px;
+  margin-top: 4px;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+`;

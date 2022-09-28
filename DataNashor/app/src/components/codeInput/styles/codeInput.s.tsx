@@ -20,7 +20,6 @@ const CodeInputHeaderWrapper = styled.div`
   align-items: center;
   color: ${Palette.NASHOR_WHITE};
   font-size: 18px;
-  font-weight: 400;
 `;
 
 const CodeInputMsg = styled.div`
@@ -29,7 +28,7 @@ const CodeInputMsg = styled.div`
   height: 12px;
   font-size: 12px;
   line-height: 0.8;
-  font-weight: 300;
+  font-weight: 500;
 `;
 const CodeHelpMsg = styled.div`
   display: flex;
@@ -42,6 +41,7 @@ const CodeHelpMsg = styled.div`
   padding-bottom: 12px;
   border-bottom: 2px dashed;
   border-color: #bdbdc0;
+  font-weight: 500;
 `;
 const CodeHelpLink = styled.u`
   color: ${Palette.NASHOR_TURQ_LINKS};
@@ -56,7 +56,6 @@ const StartAnalysisButton = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  font-weight: 500;
   border-radius: 16px;
   &:hover {
     cursor: pointer;

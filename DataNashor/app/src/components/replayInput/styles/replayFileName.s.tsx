@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import * as Palette from "../../../assets/colorPalette";
+import styled from 'styled-components';
+import * as Palette from '../../../assets/colorPalette';
 
 const ReplayFileNameWrapper = styled.div`
   display: flex;
@@ -11,7 +11,6 @@ const ReplayFileNameWrapper = styled.div`
   align-items: center;
   color: ${Palette.NASHOR_WHITE};
   font-size: 16px;
-  font-weight: 400;
 `;
 
 export { ReplayFileNameWrapper };

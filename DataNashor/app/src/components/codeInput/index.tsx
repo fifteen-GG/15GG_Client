@@ -14,9 +14,9 @@ const CodeInputHeader = () => {
 };
 interface propsType {
   codeIsTrue: number;
-  setCodeIsTrue: React.Dispatch<React.SetStateAction<number>>; 
+  setCodeIsTrue: React.Dispatch<React.SetStateAction<number>>;
 }
-export const CodeInput = (props : propsType) => {
+export const CodeInput = (props: propsType) => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const dummyCode = ['1', '2', 'a', 'b', 'c', '3'];
 

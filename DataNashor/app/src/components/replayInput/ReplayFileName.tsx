@@ -1,4 +1,4 @@
-import { ReplayFileNameWrapper } from "./styles/replayFileName.s";
+import { ReplayFileNameWrapper } from './styles/replayFileName.s';
 
 export const ReplayFileName = () => {
   return (

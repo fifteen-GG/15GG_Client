@@ -52,4 +52,5 @@ export const Announcement = styled.div`
   height: 12px;
   color: ${Palette.NASHOR_WHITE};
   font-size: 12px;
+  font-weight: 500;
 `;
