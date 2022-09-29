@@ -16,11 +16,11 @@ export const TimeOutput = () => {
         {time.map((_, i) => {
           if (i === 2)
             return (
-              <OutputFieldWithColonWrapper>
-                :<OutputField>{time[i]}</OutputField>
+              <OutputFieldWithColonWrapper key={i}>
+                :<OutputField key={i}>{time[i]}</OutputField>
               </OutputFieldWithColonWrapper>
             );
-          return <OutputField>{time[i]}</OutputField>;
+          return <OutputField key={i}>{time[i]}</OutputField>;
         })}
       </OutputFieldWrapper>
       <Announcement>실시간 분석 진행중...</Announcement>
