@@ -13,55 +13,61 @@ import { useState } from 'react';
 export const formatChampion = (data: { championName: string }) => {
   return `https://opgg-static.akamaized.net/images/lol/champion/${data.championName}.png`;
 };
+interface userData {
+  name: string;
+  champion: string;
+}
+interface gameData {
+  redTeam: userData[];
+  blueTeam: userData[];
+}
 
 export const GameInfo = () => {
-  const [RedTeamUserInfo, setRedTeamUserInfo] = useState([
-    { championName: 'Lux', userName: '드레이븐1호기' },
-    { championName: 'Sona', userName: '지방간' },
-    { championName: 'Gangplank', userName: '아랫집김서방' },
-    { championName: 'Darius', userName: '이진형' },
-    { championName: 'Rumble', userName: '브랜드마크' },
-  ]);
-  const [BlueTeamUserInfo, setBlueTeamUserInfo] = useState([
-    { championName: 'Malzahar', userName: '시험다음주' },
-    { championName: 'Malphite', userName: '슈퍼섹시보이' },
-    { championName: 'MissFortune', userName: '정잭영' },
-    { championName: 'Soraka', userName: '지녕지뇽지녕' },
-    { championName: 'Amumu', userName: '나는누구게' },
-  ]);
+  const [game, setGame] = useState<gameData>({
+    redTeam: [
+      { name: '정잭영...', champion: 'Aatrox' },
+      { name: '정잭일...', champion: 'Trundle' },
+      { name: '정잭이...', champion: 'Azir' },
+      { name: '정잭삼...', champion: 'Zeri' },
+      { name: '정잭사...', champion: 'Yuumi' },
+    ],
+    blueTeam: [
+      { name: '정잭오...', champion: 'Kalista' },
+      { name: '정잭육...', champion: 'Amumu' },
+      { name: '정잭칠...', champion: 'Sejuani' },
+      { name: '정잭팔...', champion: 'Graves' },
+      { name: '정잭구...', champion: 'Galio' },
+    ],
+  });
 
   return (
     <ReplayPreviewWrapper sort={false}>
       <UsersInfoWrapper>
         <TeamWrapper>
-          {RedTeamUserInfo.map((_, i) => {
+          {game.redTeam.map((_, i) => {
             return (
               <UserWrapper key={i}>
                 <UserImgWrapper>
                   <UserImg
                     src={formatChampion({
-                      championName: `${RedTeamUserInfo[i].championName}`,
+                      championName: `${game.redTeam[i].champion}`,
                     })}
                   />
                 </UserImgWrapper>
-                <UserName team={Team.RED}>
-                  {RedTeamUserInfo[i].userName}
-                </UserName>
+                <UserName team={Team.RED}>{game.blueTeam[i].name}</UserName>
               </UserWrapper>
             );
           })}
         </TeamWrapper>
         <TeamWrapper>
-          {RedTeamUserInfo.map((_, i) => {
+          {game.blueTeam.map((_, i) => {
             return (
               <UserWrapper key={i}>
-                <UserName team={Team.BLUE}>
-                  {BlueTeamUserInfo[i].userName}
-                </UserName>
+                <UserName team={Team.BLUE}>{game.blueTeam[i].name}</UserName>
                 <UserImgWrapper>
                   <UserImg
                     src={formatChampion({
-                      championName: `${BlueTeamUserInfo[i].championName}`,
+                      championName: `${game.blueTeam[i].champion}`,
                     })}
                   />
                 </UserImgWrapper>
