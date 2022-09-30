@@ -6,8 +6,8 @@ import { CodeInputFieldWrapper, InputField } from './styles/codeInputField.s';
 interface propsType {
   code: string[];
   setCode: React.Dispatch<React.SetStateAction<string[]>>;
-  codeIsTrue: number;
-  setCodeIsTrue: React.Dispatch<React.SetStateAction<number>>;
+  inputBoxInit: boolean;
+  setInputBoxInit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const CodeInputField = (props: propsType) => {
@@ -15,7 +15,7 @@ export const CodeInputField = (props: propsType) => {
     let updatedCode = [...props.code];
     updatedCode[index] = e.target.value;
     props.setCode(updatedCode);
-    if (props.codeIsTrue === 0) props.setCodeIsTrue(2);
+    if (props.inputBoxInit === false) props.setInputBoxInit(true);
   };
 
   const ref = useRef<HTMLInputElement[]>([]);
@@ -41,7 +41,7 @@ export const CodeInputField = (props: propsType) => {
                 if (i > 0) ref.current[i - 1]!.focus();
               }
             }}
-            codeIsTrue={props.codeIsTrue}
+            inputBoxInit={props.inputBoxInit}
           />
         );
       })}

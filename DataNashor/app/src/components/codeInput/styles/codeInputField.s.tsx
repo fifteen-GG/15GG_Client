@@ -13,7 +13,7 @@ const CodeInputFieldWrapper = styled.div`
   justify-content: space-between;
 `;
 interface props {
-  codeIsTrue: number;
+  inputBoxInit: boolean;
 }
 const InputField = styled.input<props>`
   box-sizing: border-box;
@@ -28,15 +28,13 @@ const InputField = styled.input<props>`
   font-weight: 500;
   border-radius: 8px;
   border: ${(props) =>
-    `${
-      props.codeIsTrue === 2 ? '0' : `1.5px solid ${Palette.NASHOR_RED_ERROR}`
-    }`};
+    `${props.inputBoxInit ? '0' : `1.5px solid ${Palette.NASHOR_RED_ERROR}`}`};
   outline: 0;
   background-color: ${Palette.NASHOR_BLACK_100};
   font-family: 'SUIT';
   animation: ${(props) =>
     `${
-      props.codeIsTrue
+      props.inputBoxInit
         ? 'none'
         : `slidein 0.1s 3 ;
   @keyframes slidein {
