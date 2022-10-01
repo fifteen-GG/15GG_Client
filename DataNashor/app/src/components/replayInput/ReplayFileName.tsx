@@ -1,21 +1,24 @@
 import { ReplayFileNameWrapper } from './styles/replayFileName.s';
-import React, { useCallback } from 'react';
 import { useDropzone, FileWithPath } from 'react-dropzone';
+import { useState } from 'react';
 
 export const ReplayFileName = () => {
+  const [fileDropped, setFileDropped] = useState(false);
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
   const files = acceptedFiles.map((file: FileWithPath) => (
-    <li key={file.path}>{file.name}</li>
+    <u key={file.path}>{file.name}</u>
   ));
 
   return (
-    <ReplayFileNameWrapper
-      onDrop={(acceptedFiles) => console.log(acceptedFiles)}
-    >
-      <div {...getRootProps({ className: 'dropzone' })}>
-        <input {...getInputProps()} />
-        <u>파일을 입력해 주세요.{files}</u>
-      </div>
-    </ReplayFileNameWrapper>
+    <div {...getRootProps({ className: 'dropzone' })}>
+      <input {...getInputProps()} />
+      <ReplayFileNameWrapper
+        fileDropped={fileDropped}
+        onDrop={() => setFileDropped(true)}
+        onClick={() => setFileDropped(true)}
+      >
+        {fileDropped ? files : <u>드래그해서 파일 추가하기...</u>}
+      </ReplayFileNameWrapper>
+    </div>
   );
 };
