@@ -10,7 +10,6 @@ interface propsType {
   fileDropped: boolean;
   setFileDropped: Function;
 }
-
 export const ReplayFileName = (props: propsType) => {
   //DropZone 사용을 위한 state
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
@@ -20,7 +19,7 @@ export const ReplayFileName = (props: propsType) => {
       //오브젝트 set함수 사용은 오브젝트 통채로 넣어주기 object: {}
       props.setFileInfo({
         fileName: `${acceptedFiles[0].name}`,
-        filePath: '경로입니다.',
+        filePath: `${(acceptedFiles[0] as FileWithPath).path}`,
       });
     }
   }, [acceptedFiles]);
