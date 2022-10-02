@@ -14,8 +14,8 @@ export const ReplayFileNameWrapper = styled.div<propsType>`
   color: ${(props) =>
     `${
       props.fileDropped
-        ? `${Palette.NASHOR_TURQ_LINKS}`
-        : `${Palette.NASHOR_WHITE}`
+        ? `${Palette.NASHOR_WHITE}`
+        : `${Palette.NASHOR_TURQ_LINKS}`
     }`};
   font-size: 16px;
 `;
