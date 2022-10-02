@@ -11,7 +11,7 @@ export const ReplayFileName = (props: propsType) => {
   //DropZone 사용을 위한 state
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      '/*': ['.rofl'],
+      'text/*': ['.rofl'],
     },
   });
 
