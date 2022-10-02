@@ -6,13 +6,14 @@ interface propsType {
   //부모 컴포넌트로 파일명 전달.
   fileInfo: { fileName: string; filePath: string };
   setFileInfo: Function;
-
-  fileDropped: boolean;
-  setFileDropped: Function;
 }
 export const ReplayFileName = (props: propsType) => {
   //DropZone 사용을 위한 state
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: {
+      '/*': ['.rofl'],
+    },
+  });
 
   useEffect(() => {
     if (acceptedFiles[0]) {
@@ -27,15 +28,11 @@ export const ReplayFileName = (props: propsType) => {
   return (
     <div {...getRootProps({ className: 'dropzone' })}>
       <input {...getInputProps()} />
-      <ReplayFileNameWrapper
-        fileDropped={props.fileDropped}
-        onDrop={() => props.setFileDropped(true)}
-        onClick={() => props.setFileDropped(true)}
-      >
-        {props.fileDropped ? (
-          <u>{props.fileInfo.fileName}</u>
-        ) : (
+      <ReplayFileNameWrapper fileName={props.fileInfo.fileName}>
+        {props.fileInfo.fileName === '' ? (
           <u>드래그해서 파일 추가하기...</u>
+        ) : (
+          <u>{props.fileInfo.fileName}</u>
         )}
       </ReplayFileNameWrapper>
     </div>
