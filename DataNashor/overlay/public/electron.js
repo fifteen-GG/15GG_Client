@@ -29,7 +29,7 @@ function createWindow() {
   if (isDev) {
     // mainWindow.webContents.openDevTools({ mode: "detach" });
     mainWindow.webContents.openDevTools({ mode: "detach", activate: false });
-    overlayWindow.attachTo(mainWindow, "제목 없음 - 그림판");
+    overlayWindow.attachTo(mainWindow, "League of Legends (TM) Client");
     overlayWindow.on("focus", (ev) => {
       console.log("focus", ev);
     });
