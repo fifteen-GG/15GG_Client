@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import * as Palette from '../../../assets/colorPalette';
-
-const ReplayFileNameWrapper = styled.div`
+interface propsType {
+  fileDropped: boolean;
+}
+export const ReplayFileNameWrapper = styled.div<propsType>`
   display: flex;
   background-color: ${Palette.NASHOR_BLACK_100};
   height: 64px;
@@ -9,8 +11,11 @@ const ReplayFileNameWrapper = styled.div`
   border-radius: 16px;
   justify-content: center;
   align-items: center;
-  color: ${Palette.NASHOR_WHITE};
+  color: ${(props) =>
+    `${
+      props.fileDropped
+        ? `${Palette.NASHOR_TURQ_LINKS}`
+        : `${Palette.NASHOR_WHITE}`
+    }`};
   font-size: 16px;
 `;
-
-export { ReplayFileNameWrapper };
