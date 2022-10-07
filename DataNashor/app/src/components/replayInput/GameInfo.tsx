@@ -8,66 +8,154 @@ import {
   UserName,
   Team,
 } from './styles/gameInfo.s';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export const formatChampion = (data: { championName: string }) => {
   return `https://opgg-static.akamaized.net/images/lol/champion/${data.championName}.png`;
 };
+
 interface userData {
-  name: string;
-  champion: string;
+  summonerName: string;
+  championName: string;
+  individualPosition: string;
+  teamPosition: string;
 }
 interface gameData {
-  redTeam: userData[];
-  blueTeam: userData[];
+  gameVersion: string;
+  red: userData[];
+  blue: userData[];
+  gameCreation: string;
+}
+interface fileData {
+  fileName: string;
 }
 
-export const GameInfo = () => {
+export const GameInfo = (props: fileData) => {
+  async function getData() {
+    try {
+      //응답 성공
+      const response = await axios.get(
+        'http://3.38.169.77:8000/api/v1/riot/match/preview/' +
+          `${props.fileName.replace('.rofl', '')}`,
+      );
+      setGame({
+        gameVersion: `${response.data.gameVersion.substr(0, 5)}`,
+        red: response.data.red,
+        blue: response.data.blue,
+        gameCreation: `${response.data.gameCreation.substr(0, 10)}`,
+      });
+      console.log(response);
+    } catch (error) {
+      //응답 실패
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getData();
+    console.log(game);
+  }, [props.fileName]);
+
   const [game, setGame] = useState<gameData>({
-    redTeam: [
-      { name: '정잭영...', champion: 'Aatrox' },
-      { name: '정잭일...', champion: 'Trundle' },
-      { name: '정잭이...', champion: 'Azir' },
-      { name: '정잭삼...', champion: 'Zeri' },
-      { name: '정잭사...', champion: 'Yuumi' },
+    gameVersion: '',
+    red: [
+      {
+        summonerName: '',
+        championName: '',
+        individualPosition: '',
+        teamPosition: '',
+      },
+      {
+        summonerName: '',
+        championName: '',
+        individualPosition: '',
+        teamPosition: '',
+      },
+      {
+        summonerName: '',
+        championName: '',
+        individualPosition: '',
+        teamPosition: '',
+      },
+      {
+        summonerName: '',
+        championName: '',
+        individualPosition: '',
+        teamPosition: '',
+      },
+      {
+        summonerName: '',
+        championName: '',
+        individualPosition: '',
+        teamPosition: '',
+      },
     ],
-    blueTeam: [
-      { name: '정잭오...', champion: 'Kalista' },
-      { name: '정잭육...', champion: 'Amumu' },
-      { name: '정잭칠...', champion: 'Sejuani' },
-      { name: '정잭팔...', champion: 'Graves' },
-      { name: '정잭구...', champion: 'Galio' },
+    blue: [
+      {
+        summonerName: '',
+        championName: '',
+        individualPosition: '',
+        teamPosition: '',
+      },
+      {
+        summonerName: '',
+        championName: '',
+        individualPosition: '',
+        teamPosition: '',
+      },
+      {
+        summonerName: '',
+        championName: '',
+        individualPosition: '',
+        teamPosition: '',
+      },
+      {
+        summonerName: '',
+        championName: '',
+        individualPosition: '',
+        teamPosition: '',
+      },
+      {
+        summonerName: '',
+        championName: '',
+        individualPosition: '',
+        teamPosition: '',
+      },
     ],
+    gameCreation: '',
   });
 
   return (
     <ReplayPreviewWrapper sort={false}>
       <UsersInfoWrapper>
         <TeamWrapper>
-          {game.redTeam.map((_, i) => {
+          {game.red.map((_, i) => {
             return (
               <UserWrapper key={i}>
                 <UserImgWrapper>
                   <UserImg
                     src={formatChampion({
-                      championName: `${game.redTeam[i].champion}`,
+                      championName: `${game.red[i].championName}`,
                     })}
                   />
                 </UserImgWrapper>
-                <UserName team={Team.RED}>{game.blueTeam[i].name}</UserName>
+                <UserName team={Team.RED}>{game.red[i].summonerName}</UserName>
               </UserWrapper>
             );
           })}
         </TeamWrapper>
         <TeamWrapper>
-          {game.blueTeam.map((_, i) => {
+          {game.blue.map((_, i) => {
             return (
               <UserWrapper key={i}>
-                <UserName team={Team.BLUE}>{game.blueTeam[i].name}</UserName>
+                <UserName team={Team.BLUE}>
+                  {game.blue[i].summonerName}
+                </UserName>
                 <UserImgWrapper>
                   <UserImg
                     src={formatChampion({
-                      championName: `${game.blueTeam[i].champion}`,
+                      championName: `${game.blue[i].championName}`,
                     })}
                   />
                 </UserImgWrapper>
@@ -76,7 +164,7 @@ export const GameInfo = () => {
           })}
         </TeamWrapper>
       </UsersInfoWrapper>
-      2022-09-11 · 패치 12.17
+      {game.gameCreation} · 패치 {game.gameVersion}
     </ReplayPreviewWrapper>
   );
 };
