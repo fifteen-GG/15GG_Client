@@ -52,8 +52,6 @@ export const GameInfo = (props: fileData) => {
     console.log(game);
   }, [props.fileName]);
 
-  const red = [];
-
   const [game, setGame] = useState<gameData>();
 
   return (
@@ -94,7 +92,7 @@ export const GameInfo = (props: fileData) => {
           })}
         </TeamWrapper>
       </UsersInfoWrapper>
-      {game?.gameCreation} · 패치 {game?.gameVersion}
+      {game?.gameCreation.slice(0, 10)} · 패치 {game?.gameVersion.slice(0, 5)}
     </ReplayPreviewWrapper>
   );
 };
