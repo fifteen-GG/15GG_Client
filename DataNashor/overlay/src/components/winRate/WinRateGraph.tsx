@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
-import type { ChartData, ChartArea, ChartType } from "chart.js";
+import React, { useRef, useState, useEffect } from 'react';
+import type { ChartData, ChartArea, ChartType } from 'chart.js';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,15 +8,15 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
-import { Chart } from "react-chartjs-2";
+} from 'chart.js';
+import { Chart } from 'react-chartjs-2';
 import {
   BarWrapper,
   RateWrapper,
   WinningRate,
   GraphTitle,
   Graph,
-} from "./styles/winRateGraph.s";
+} from './styles/winRateGraph.s';
 
 ChartJS.register(
   CategoryScale,
@@ -24,11 +24,11 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 export const options = {
-  indexAxis: "y" as const,
+  indexAxis: 'y' as const,
   maintainAspectRatio: false,
   events: [],
   scales: {
@@ -56,39 +56,39 @@ export const options = {
   plugins: {
     legend: {
       display: false,
-      position: "right" as const,
+      position: 'right' as const,
     },
     title: {
       display: false,
-      text: "Chart.js Horizontal Bar Chart",
+      text: 'Chart.js Horizontal Bar Chart',
     },
   },
 };
 
-const labels = [""];
+const labels = [''];
 
 export const data = {
   labels,
   datasets: [
     {
-      label: "Dataset 1",
+      label: 'Dataset 1',
       data: [80.4],
-      borderColor: "#e84057",
-      backgroundColor: "#e84057",
+      borderColor: '#e84057',
+      backgroundColor: '#e84057',
       borderWidth: 0,
     },
     {
-      label: "Dataset 2",
+      label: 'Dataset 2',
       data: [100],
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "#5383e8",
+      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: '#5383e8',
       borderWidth: 0,
     },
   ],
 };
 const WinRateGraph = () => {
   const chartRef = useRef<ChartJS>(null);
-  const [chartData, setChartData] = useState<ChartData<"bar">>({
+  const [chartData, setChartData] = useState<ChartData<'bar'>>({
     datasets: [],
   });
 
@@ -100,7 +100,7 @@ const WinRateGraph = () => {
     }
     const chartData = {
       ...data,
-      datasets: data.datasets.map((dataset) => ({
+      datasets: data.datasets.map(dataset => ({
         ...dataset,
       })),
     };
