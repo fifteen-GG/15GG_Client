@@ -22,7 +22,9 @@ export const ReplayInput = (props: propsType) => {
     fileName: '',
     filePath: '',
   });
-  const [fileDropped, setFileDropped] = useState(false);
+  useEffect(() => {
+    console.log(fileInfo);
+  }, [fileInfo]);
 
   return (
     <ReplayInputWrapper>
@@ -34,7 +36,7 @@ export const ReplayInput = (props: propsType) => {
         <ReplayInputHeader>분석할 리플레이 선택</ReplayInputHeader>
       )}
       {fileInfo.fileName === '' ? <ReplayPreview /> : <GameInfo />}
-      <ReplayFileName fileInfo={fileInfo} setFileInfo={setFileInfo} />
+      <ReplayFileName setFileInfo={setFileInfo} />
     </ReplayInputWrapper>
   );
 };
