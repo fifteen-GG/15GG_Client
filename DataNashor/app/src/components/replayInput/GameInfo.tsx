@@ -10,10 +10,7 @@ import {
 } from './styles/gameInfo.s';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
-export const formatChampion = (data: { championName: string }) => {
-  return `https://opgg-static.akamaized.net/images/lol/champion/${data.championName}.png`;
-};
+import { urlGameData, urlChampion } from '../utils/Url';
 
 interface userData {
   summonerName: string;
@@ -36,8 +33,7 @@ export const GameInfo = (props: fileData) => {
     try {
       //응답 성공
       const response = await axios.get(
-        'http://3.38.169.77:8000/api/v1/riot/match/preview/' +
-          `${props.fileName.replace('.rofl', '')}`,
+        urlGameData(props.fileName.replace('.rofl', '')),
       );
       setGame(response.data as gameData);
       console.log(response);
@@ -62,11 +58,7 @@ export const GameInfo = (props: fileData) => {
             return (
               <UserWrapper key={i}>
                 <UserImgWrapper>
-                  <UserImg
-                    src={formatChampion({
-                      championName: `${game.red[i].championName}`,
-                    })}
-                  />
+                  <UserImg src={urlChampion(game.red[i].championName)} />
                 </UserImgWrapper>
                 <UserName team={Team.RED}>{game.red[i].summonerName}</UserName>
               </UserWrapper>
@@ -81,11 +73,7 @@ export const GameInfo = (props: fileData) => {
                   {game.blue[i].summonerName}
                 </UserName>
                 <UserImgWrapper>
-                  <UserImg
-                    src={formatChampion({
-                      championName: `${game.blue[i].championName}`,
-                    })}
-                  />
+                  <UserImg src={urlChampion(game.blue[i].championName)} />
                 </UserImgWrapper>
               </UserWrapper>
             );
