@@ -18,7 +18,7 @@ interface propsType {
 }
 export const CodeInput = (props: propsType) => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
-  const dummyCode = ['1', '2', 'a', 'b', 'c', '3'];
+  const dummyCode = ['1', '2', 'A', 'B', 'C', '3'];
   const [inputBoxInit, setInputBoxInit] = useState(true);
 
   const onClick = () => {
