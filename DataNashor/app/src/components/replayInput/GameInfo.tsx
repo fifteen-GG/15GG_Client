@@ -39,12 +39,7 @@ export const GameInfo = (props: fileData) => {
         'http://3.38.169.77:8000/api/v1/riot/match/preview/' +
           `${props.fileName.replace('.rofl', '')}`,
       );
-      setGame({
-        gameVersion: `${response.data.gameVersion.substr(0, 5)}`,
-        red: response.data.red,
-        blue: response.data.blue,
-        gameCreation: `${response.data.gameCreation.substr(0, 10)}`,
-      });
+      setGame(response.data as gameData);
       console.log(response);
     } catch (error) {
       //응답 실패
@@ -57,80 +52,15 @@ export const GameInfo = (props: fileData) => {
     console.log(game);
   }, [props.fileName]);
 
-  const [game, setGame] = useState<gameData>({
-    gameVersion: '',
-    red: [
-      {
-        summonerName: '',
-        championName: '',
-        individualPosition: '',
-        teamPosition: '',
-      },
-      {
-        summonerName: '',
-        championName: '',
-        individualPosition: '',
-        teamPosition: '',
-      },
-      {
-        summonerName: '',
-        championName: '',
-        individualPosition: '',
-        teamPosition: '',
-      },
-      {
-        summonerName: '',
-        championName: '',
-        individualPosition: '',
-        teamPosition: '',
-      },
-      {
-        summonerName: '',
-        championName: '',
-        individualPosition: '',
-        teamPosition: '',
-      },
-    ],
-    blue: [
-      {
-        summonerName: '',
-        championName: '',
-        individualPosition: '',
-        teamPosition: '',
-      },
-      {
-        summonerName: '',
-        championName: '',
-        individualPosition: '',
-        teamPosition: '',
-      },
-      {
-        summonerName: '',
-        championName: '',
-        individualPosition: '',
-        teamPosition: '',
-      },
-      {
-        summonerName: '',
-        championName: '',
-        individualPosition: '',
-        teamPosition: '',
-      },
-      {
-        summonerName: '',
-        championName: '',
-        individualPosition: '',
-        teamPosition: '',
-      },
-    ],
-    gameCreation: '',
-  });
+  const red = [];
+
+  const [game, setGame] = useState<gameData>();
 
   return (
     <ReplayPreviewWrapper sort={false}>
       <UsersInfoWrapper>
         <TeamWrapper>
-          {game.red.map((_, i) => {
+          {game?.red.map((_, i) => {
             return (
               <UserWrapper key={i}>
                 <UserImgWrapper>
@@ -146,7 +76,7 @@ export const GameInfo = (props: fileData) => {
           })}
         </TeamWrapper>
         <TeamWrapper>
-          {game.blue.map((_, i) => {
+          {game?.blue.map((_, i) => {
             return (
               <UserWrapper key={i}>
                 <UserName team={Team.BLUE}>
@@ -164,7 +94,7 @@ export const GameInfo = (props: fileData) => {
           })}
         </TeamWrapper>
       </UsersInfoWrapper>
-      {game.gameCreation} · 패치 {game.gameVersion}
+      {game?.gameCreation} · 패치 {game?.gameVersion}
     </ReplayPreviewWrapper>
   );
 };
