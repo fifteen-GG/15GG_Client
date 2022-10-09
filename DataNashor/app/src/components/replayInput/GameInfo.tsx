@@ -8,9 +8,12 @@ import {
   UserName,
   Team,
 } from './styles/gameInfo.s';
+import { UsersInfo } from './UsersInfo';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { urlGameData, urlChampion } from '../utils/Url';
+import { urlGameData } from '../utils/Url';
+import Lottie from 'lottie-react';
+import { lottie } from '../../assets';
 
 interface userData {
   summonerName: string;
@@ -36,7 +39,7 @@ export const GameInfo = (props: fileData) => {
         urlGameData(props.fileName.replace('.rofl', '')),
       );
       setGame(response.data as gameData);
-      console.log(response);
+      setLoading(false);
     } catch (error) {
       //응답 실패
       console.error(error);
@@ -45,42 +48,28 @@ export const GameInfo = (props: fileData) => {
 
   useEffect(() => {
     getData();
-    console.log(game);
-  }, [props.fileName]);
+  }, [props]);
 
   const [game, setGame] = useState<gameData>();
+  const [loading, setLoading] = useState(true);
 
   return (
-    <ReplayPreviewWrapper sort={false}>
-      <UsersInfoWrapper>
-        <TeamWrapper>
-          {game?.red.map((_, i) => {
-            return (
-              <UserWrapper key={i}>
-                <UserImgWrapper>
-                  <UserImg src={urlChampion(game.red[i].championName)} />
-                </UserImgWrapper>
-                <UserName team={Team.RED}>{game.red[i].summonerName}</UserName>
-              </UserWrapper>
-            );
-          })}
-        </TeamWrapper>
-        <TeamWrapper>
-          {game?.blue.map((_, i) => {
-            return (
-              <UserWrapper key={i}>
-                <UserName team={Team.BLUE}>
-                  {game.blue[i].summonerName}
-                </UserName>
-                <UserImgWrapper>
-                  <UserImg src={urlChampion(game.blue[i].championName)} />
-                </UserImgWrapper>
-              </UserWrapper>
-            );
-          })}
-        </TeamWrapper>
-      </UsersInfoWrapper>
-      {game?.gameCreation.slice(0, 10)} · 패치 {game?.gameVersion.slice(0, 5)}
+    <ReplayPreviewWrapper sort={loading}>
+      {loading ? (
+        <>
+          <Lottie
+            animationData={lottie}
+            style={{ width: '60px', height: '60px' }}
+          />
+          데이터 불러오는 중...
+        </>
+      ) : (
+        <>
+          <UsersInfo game={game as gameData} />
+          {game?.gameCreation.slice(0, 10)} · 패치{' '}
+          {game?.gameVersion.slice(0, 5)}
+        </>
+      )}
     </ReplayPreviewWrapper>
   );
 };
