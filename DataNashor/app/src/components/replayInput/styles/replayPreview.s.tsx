@@ -12,11 +12,11 @@ export const ReplayPreviewWrapper = styled.div<propsType>`
   height: 242px;
   background-color: ${Palette.NASHOR_BLACK_100};
   border-radius: 16px;
-  font-size: ${(props) => `${props.sort === true ? '16px' : '12px'}`};
-  justify-content: ${(props) => `${props.sort === true ? 'center' : 'none'}`};
+  font-size: ${props => `${props.sort === true ? '16px' : '12px'}`};
+  justify-content: ${props => `${props.sort === true ? 'center' : 'none'}`};
   align-items: center;
   color: ${Palette.NASHOR_WHITE};
-  background-image: ${(props) =>
-    `${props.sort === false ? `url(${BackgroundImg});` : 'none'}`};
+  background-image: ${props =>
+    `${!props.sort ? `url(${BackgroundImg});` : 'none'}`};
   font-weight: 500;
 `;
