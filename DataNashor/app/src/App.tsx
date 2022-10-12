@@ -53,20 +53,39 @@ const App = () => {
   const [codeValidation, setCodeValidation] = useState(false);
 
   return (
-    <AppWrapper>
-      <Header />
-      <ContentWrapper>
-        <ReplayInput codeValidation={codeValidation} />
-        {codeValidation ? (
-          <TimeOutput />
-        ) : (
-          <CodeInput
-            codeValidation={codeValidation}
-            setCodeValidation={setCodeValidation}
-          />
-        )}
-      </ContentWrapper>
-    </AppWrapper>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="app"
+          element={
+            <AppWrapper>
+              <Header />
+              <ContentWrapper>
+                <ReplayInput codeValidation={codeValidation} />
+                {codeValidation ? (
+                  <TimeOutput />
+                ) : (
+                  <CodeInput
+                    codeValidation={codeValidation}
+                    setCodeValidation={setCodeValidation}
+                  />
+                )}
+              </ContentWrapper>
+            </AppWrapper>
+          }
+        ></Route>
+        <Route
+          path="overlay"
+          element={
+            <OverlayPlaceWrapper>
+              <AppWrapper2>
+                <WinRate />
+              </AppWrapper2>
+            </OverlayPlaceWrapper>
+          }
+        ></Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
