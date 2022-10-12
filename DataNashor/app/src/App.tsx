@@ -1,10 +1,13 @@
-import styled from 'styled-components';
-import * as Palette from './assets/colorPalette';
-import { CodeInput } from './components/codeInput';
-import { Header } from './components/header';
-import { ReplayInput } from './components/replayInput';
-import { TimeOutput } from './components/timeoutput/AnalysisTime';
-import { useState } from 'react';
+import styled from "styled-components";
+import * as Palette from "./assets/colorPalette";
+import { CodeInput } from "./components/codeInput";
+import { Header } from "./components/header";
+import { ReplayInput } from "./components/replayInput";
+import { TimeOutput } from "./components/timeoutput/AnalysisTime";
+import { WinRate } from "./components/winRate";
+import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import backGround from "./assets/svg/nashor_or_bg.svg";
 
 const AppWrapper = styled.div`
   box-sizing: border-box;
@@ -25,9 +28,28 @@ const ContentWrapper = styled.div`
   justify-content: space-between;
 `;
 
+const OverlayPlaceWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  // background-color: red;
+`;
+
+const AppWrapper2 = styled.div`
+  // margin-left: 2050px;
+  margin-left: 1000px;
+  margin-top: 50px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background-image: url(${backGround});
+  border-radius: 10px;
+  opacity: 0.8;
+  height: 100px;
+  width: 360px;
+`;
+
 const App = () => {
-  //1 은 입력코드와 발급코드가 일치할 때 시간출력컴포로 전환, 0과 2는
-  //코드 인풋 컴포내에서, 코드의 불일치와, 코드 입력때의 코드인풋 컴포 유지.
   const [codeValidation, setCodeValidation] = useState(false);
 
   return (
