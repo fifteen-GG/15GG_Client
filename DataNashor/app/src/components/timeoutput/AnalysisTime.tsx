@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {
-  TimeOutputWrapper,
+  OutputWrapper,
   OutputFieldWrapper,
   OutputFieldWithColonWrapper,
   OutputField,
@@ -11,7 +11,7 @@ export const TimeOutput = () => {
   const [time, setTime] = useState(['1', '2', '1', '1']);
 
   return (
-    <TimeOutputWrapper>
+    <>
       <OutputFieldWrapper>
         {time.map((_, i) => {
           if (i === 2)
@@ -24,6 +24,6 @@ export const TimeOutput = () => {
         })}
       </OutputFieldWrapper>
       <Announcement>실시간 분석 진행중...</Announcement>
-    </TimeOutputWrapper>
+    </>
   );
 };
