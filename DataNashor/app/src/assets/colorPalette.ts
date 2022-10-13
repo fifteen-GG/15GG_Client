@@ -5,3 +5,4 @@ export const NASHOR_WHITE = '#fafafa';
 export const NASHOR_TURQ_LINKS = '#3595a1';
 export const NASHOR_RED_ERROR = '#981414';
 export const NASHOR_GREEN = '#61d125';
+export const NASHOR_GRAY_TEXT = '#88898d';

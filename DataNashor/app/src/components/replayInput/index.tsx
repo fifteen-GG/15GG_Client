@@ -17,12 +17,11 @@ interface fileInfoType {
 }
 export const ReplayInput = (props: propsType) => {
   //서버 사용을 위해 파일명과 파일경로 state로 뽑아오기..
-  //setFileInfo({fileName : '', filePath : ''})
+  const [response, setResponse] = useState(Boolean);
   const [fileInfo, setFileInfo] = useState<fileInfoType>({
     fileName: '',
     filePath: '',
   });
-  const [fileDropped, setFileDropped] = useState(false);
 
   return (
     <ReplayInputWrapper>
@@ -33,8 +32,12 @@ export const ReplayInput = (props: propsType) => {
       ) : (
         <ReplayInputHeader>분석할 리플레이 선택</ReplayInputHeader>
       )}
-      {fileInfo.fileName === '' ? <ReplayPreview /> : <GameInfo />}
-      <ReplayFileName fileInfo={fileInfo} setFileInfo={setFileInfo} />
+      {fileInfo.fileName === '' ? (
+        <ReplayPreview />
+      ) : (
+        <GameInfo fileName={fileInfo.fileName} />
+      )}
+      <ReplayFileName setFileInfo={setFileInfo} />
     </ReplayInputWrapper>
   );
 };

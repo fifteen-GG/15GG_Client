@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import * as Palette from '../../../assets/colorPalette';
 
-export const TimeOutputWrapper = styled.div`
+export const OutputWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   align-items: center;
