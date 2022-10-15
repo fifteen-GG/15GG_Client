@@ -30,8 +30,8 @@ const ContentWrapper = styled.div`
 const App = () => {
   //1 은 입력코드와 발급코드가 일치할 때 시간출력컴포로 전환, 0과 2는
   //코드 인풋 컴포내에서, 코드의 불일치와, 코드 입력때의 코드인풋 컴포 유지.
-  const [codeValidation, setCodeValidation] = useState(false);
-  const [endValidation, setEndValidation] = useState(false);
+  const [codeValidation, setCodeValidation] = useState<boolean>(false);
+  const [endValidation, setEndValidation] = useState<boolean>(false);
 
   return (
     <AppWrapper>
