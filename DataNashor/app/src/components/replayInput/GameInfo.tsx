@@ -32,7 +32,7 @@ interface fileData {
 }
 
 export const GameInfo = (props: fileData) => {
-  async function getData() {
+  const getData = async () => {
     try {
       //응답 성공
       const response = await axios.get(
@@ -44,7 +44,7 @@ export const GameInfo = (props: fileData) => {
       //응답 실패
       console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     getData();
