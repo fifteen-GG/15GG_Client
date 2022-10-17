@@ -7,50 +7,57 @@ import {
   UserName,
   Team,
 } from './styles/gameInfo.s';
-import { urlChampion } from '../utils/Url';
 
-interface userData {
+interface playerInfo {
   summonerName: string;
   championName: string;
   individualPosition: string;
   teamPosition: string;
 }
-interface gameData {
+interface gameInfo {
   gameVersion: string;
-  red: userData[];
-  blue: userData[];
+  red: playerInfo[];
+  blue: playerInfo[];
   gameCreation: string;
 }
 interface propsType {
-  game: gameData;
+  game: gameInfo;
 }
 
 export const UsersInfo = (props: propsType) => {
   return (
     <UsersInfoWrapper>
       <TeamWrapper>
-        {props.game?.red.map((_, i) => {
+        {props.game?.red.map(({ championName, summonerName }, i) => {
           return (
             <UserWrapper key={i}>
               <UserImgWrapper>
-                <UserImg src={urlChampion(props.game.red[i].championName)} />
+                <UserImg
+                  src={`${process.env.REACT_APP_OPGG_API_ROOT}/images/lol/champion/${championName}.png`}
+                />
               </UserImgWrapper>
               <UserName team={Team.RED}>
-                {props.game.red[i].summonerName}
+                {summonerName.length > 3
+                  ? summonerName.slice(0, 3) + '...'
+                  : summonerName}
               </UserName>
             </UserWrapper>
           );
         })}
       </TeamWrapper>
       <TeamWrapper>
-        {props.game?.blue.map((_, i) => {
+        {props.game?.blue.map(({ championName, summonerName }, i) => {
           return (
             <UserWrapper key={i}>
               <UserName team={Team.BLUE}>
-                {props.game.blue[i].summonerName}
+                {summonerName.length > 3
+                  ? summonerName.slice(0, 3) + '...'
+                  : summonerName}
               </UserName>
               <UserImgWrapper>
-                <UserImg src={urlChampion(props.game.blue[i].championName)} />
+                <UserImg
+                  src={`${process.env.REACT_APP_OPGG_API_ROOT}/images/lol/champion/${championName}.png`}
+                />
               </UserImgWrapper>
             </UserWrapper>
           );

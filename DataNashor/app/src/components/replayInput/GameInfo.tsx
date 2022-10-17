@@ -1,19 +1,9 @@
 import { ReplayPreviewWrapper } from './styles/replayPreview.s';
-import {
-  UsersInfoWrapper,
-  TeamWrapper,
-  UserWrapper,
-  UserImgWrapper,
-  UserImg,
-  UserName,
-  Team,
-} from './styles/gameInfo.s';
 import { UsersInfo } from './UsersInfo';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { urlGameData } from '../utils/Url';
-import Lottie from 'lottie-react';
-import { lottie } from '../../assets';
+import GGLoading from 'lottie-react';
+import * as GG_LOADING_KHAZIX from '../../assets/svg/GG_khazix.json';
 
 interface userData {
   summonerName: string;
@@ -36,7 +26,9 @@ export const GameInfo = (props: fileData) => {
     try {
       //응답 성공
       const response = await axios.get(
-        urlGameData(props.fileName.replace('.rofl', '')),
+        `${
+          process.env.REACT_APP_GG_API_ROOT
+        }/riot/match/preview/${props.fileName.replace('.rofl', '')}`,
       );
       setGame(response.data as gameData);
       setLoading(false);
@@ -48,6 +40,7 @@ export const GameInfo = (props: fileData) => {
 
   useEffect(() => {
     getData();
+    console.log(process.env.REACT_APP_OPGG_API_ROOT);
   }, [props]);
 
   const [game, setGame] = useState<gameData>();
@@ -57,8 +50,8 @@ export const GameInfo = (props: fileData) => {
     <ReplayPreviewWrapper sort={loading}>
       {loading ? (
         <>
-          <Lottie
-            animationData={lottie}
+          <GGLoading
+            animationData={GG_LOADING_KHAZIX}
             style={{ width: '60px', height: '60px' }}
           />
           데이터 불러오는 중...

@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import type { DropTargetMonitor } from 'react-dnd';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
-import { InputField } from './styles/replayFileName.s';
+import { DropZone } from './styles/replayFileName.s';
 import { useState } from 'react';
 
 export interface TargetBoxProps {
@@ -48,7 +48,7 @@ export const TargetBox: FC<TargetBoxProps> = props => {
 
   return (
     <label htmlFor="inputfile" style={{ width: '100%', height: '100%' }}>
-      <InputField ref={drop} isActive={isActive}>
+      <DropZone ref={drop} isActive={isActive}>
         {anouncement}
         <input
           id="inputfile"
@@ -56,7 +56,7 @@ export const TargetBox: FC<TargetBoxProps> = props => {
           onChange={e => onChange(e)}
           style={{ display: 'none', width: '100%', height: '100%' }}
         />
-      </InputField>
+      </DropZone>
     </label>
   );
 };

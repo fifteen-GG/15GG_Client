@@ -13,8 +13,8 @@ const CodeInputHeader = () => {
   return <CodeInputHeaderWrapper>데이터 코드 입력</CodeInputHeaderWrapper>;
 };
 interface propsType {
-  codeValidation: boolean;
-  setCodeValidation: React.Dispatch<React.SetStateAction<boolean>>;
+  isValidatedCode: boolean;
+  setIsValidatedCode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export const CodeInput = (props: propsType) => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
@@ -24,7 +24,7 @@ export const CodeInput = (props: propsType) => {
   const onClick = () => {
     {
       JSON.stringify(code) === JSON.stringify(dummyCode)
-        ? props.setCodeValidation(true)
+        ? props.setIsValidatedCode(true)
         : setInputBoxInit(false);
     }
   };
