@@ -5,6 +5,8 @@ import { Header } from "./components/header";
 import { ReplayInput } from "./components/replayInput";
 import { TimeOutput } from "./components/timeoutput/AnalysisTime";
 import { WinRate } from "./components/winRate";
+import { AfterRunAnounce } from './components/timeoutput/AnalysisDone';
+import { OutputWrapper } from './components/timeoutput/styles/analysisTime.s';
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import backGround from "./assets/svg/nashor_or_bg.svg";
@@ -51,6 +53,7 @@ const AppWrapper2 = styled.div`
 
 const App = () => {
   const [codeValidation, setCodeValidation] = useState(false);
+  const [endValidation, setEndValidation] = useState(false);
 
   return (
     <BrowserRouter>
@@ -63,12 +66,18 @@ const App = () => {
               <ContentWrapper>
                 <ReplayInput codeValidation={codeValidation} />
                 {codeValidation ? (
-                  <TimeOutput />
-                ) : (
-                  <CodeInput
-                    codeValidation={codeValidation}
-                    setCodeValidation={setCodeValidation}
-                  />
+                  <OutputWrapper>
+                    {endValidation ? (
+                       <AfterRunAnounce setCodeValidation={setCodeValidation} />
+                    ) : (
+                       <TimeOutput />
+                    )}
+                  </OutputWrapper>
+                 ) : (
+                 <CodeInput
+                   codeValidation={codeValidation}
+                   setCodeValidation={setCodeValidation}
+                 />
                 )}
               </ContentWrapper>
             </AppWrapper>

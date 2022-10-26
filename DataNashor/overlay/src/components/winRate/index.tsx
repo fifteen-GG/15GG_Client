@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import * as Palette from "../../assets/colorPalette";
-import { LeagueTeams } from "./LeagueTeams";
-import WinRateGraph from "./WinRateGraph";
+import styled from 'styled-components';
+import * as Palette from '../../assets/colorPalette';
+import { LeagueTeams } from './LeagueTeams';
+import WinRateGraph from './WinRateGraph';
 
 const WinRateWrapper = styled.div`
   display: flex;

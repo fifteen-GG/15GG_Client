@@ -1,21 +1,24 @@
 import styled from 'styled-components';
 import * as Palette from '../../../assets/colorPalette';
 interface propsType {
-  fileDropped: boolean;
+  isActive: boolean;
 }
-export const ReplayFileNameWrapper = styled.div<propsType>`
+export const ReplayFileNameWrapper = styled.div`
   display: flex;
-  background-color: ${Palette.NASHOR_BLACK_100};
   height: 64px;
   margin-top: 16px;
-  border-radius: 16px;
-  justify-content: center;
-  align-items: center;
-  color: ${(props) =>
-    `${
-      props.fileDropped
-        ? `${Palette.NASHOR_TURQ_LINKS}`
-        : `${Palette.NASHOR_WHITE}`
-    }`};
+`;
+export const InputField = styled.div<propsType>`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  color: ${Palette.NASHOR_TURQ_LINKS};
   font-size: 16px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background-color: ${props =>
+    `${
+      props.isActive ? `${Palette.NASHOR_GRAY}` : `${Palette.NASHOR_BLACK_100}`
+    }`};
 `;

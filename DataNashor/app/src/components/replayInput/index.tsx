@@ -6,11 +6,23 @@ import {
   ReplayInputHeader,
   ReplayInputWrapper,
 } from './styles/replayInput.s';
+import { useState, useEffect } from 'react';
 
 interface propsType {
   codeValidation: boolean;
 }
+interface fileInfoType {
+  fileName: string;
+  filePath: string;
+}
 export const ReplayInput = (props: propsType) => {
+  //서버 사용을 위해 파일명과 파일경로 state로 뽑아오기..
+  const [response, setResponse] = useState(Boolean);
+  const [fileInfo, setFileInfo] = useState<fileInfoType>({
+    fileName: '',
+    filePath: '',
+  });
+
   return (
     <ReplayInputWrapper>
       {props.codeValidation ? (
@@ -20,8 +32,12 @@ export const ReplayInput = (props: propsType) => {
       ) : (
         <ReplayInputHeader>분석할 리플레이 선택</ReplayInputHeader>
       )}
-      {props.codeValidation ? <GameInfo /> : <ReplayPreview />}
-      <ReplayFileName />
+      {fileInfo.fileName === '' ? (
+        <ReplayPreview />
+      ) : (
+        <GameInfo fileName={fileInfo.fileName} />
+      )}
+      <ReplayFileName setFileInfo={setFileInfo} />
     </ReplayInputWrapper>
   );
 };

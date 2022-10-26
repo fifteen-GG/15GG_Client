@@ -11,10 +11,17 @@ interface propsType {
 }
 
 export const CodeInputField = (props: propsType) => {
+  var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi;
+
   const handleInput = (e: ChangeEvent<HTMLInputElement>, index: number) => {
     let updatedCode = [...props.code];
-    updatedCode[index] = e.target.value;
+    updatedCode[index] = e.target.value.toUpperCase();
+    //특수문자 입력 제한
+    if (regExp.test(updatedCode[index])) {
+      updatedCode[index] = updatedCode[index].replace(regExp, '');
+    }
     props.setCode(updatedCode);
+
     if (props.inputBoxInit === false) props.setInputBoxInit(true);
   };
 
@@ -32,7 +39,7 @@ export const CodeInputField = (props: propsType) => {
             value={props.code[i]}
             onChange={(e) => {
               handleInput(e, i);
-              if (e.target.value.length >= 1) {
+              if (e.target.value.length >= 1 && !regExp.test(e.target.value)) {
                 if (i < 5) ref.current[i + 1]!.focus();
               }
             }}

@@ -8,75 +8,68 @@ import {
   UserName,
   Team,
 } from './styles/gameInfo.s';
-import { useState } from 'react';
+import { UsersInfo } from './UsersInfo';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { urlGameData } from '../utils/Url';
+import Lottie from 'lottie-react';
+import { lottie } from '../../assets';
 
-export const formatChampion = (data: { championName: string }) => {
-  return `https://opgg-static.akamaized.net/images/lol/champion/${data.championName}.png`;
-};
 interface userData {
-  name: string;
-  champion: string;
+  summonerName: string;
+  championName: string;
+  individualPosition: string;
+  teamPosition: string;
 }
 interface gameData {
-  redTeam: userData[];
-  blueTeam: userData[];
+  gameVersion: string;
+  red: userData[];
+  blue: userData[];
+  gameCreation: string;
+}
+interface fileData {
+  fileName: string;
 }
 
-export const GameInfo = () => {
-  const [game, setGame] = useState<gameData>({
-    redTeam: [
-      { name: '정잭영...', champion: 'Aatrox' },
-      { name: '정잭일...', champion: 'Trundle' },
-      { name: '정잭이...', champion: 'Azir' },
-      { name: '정잭삼...', champion: 'Zeri' },
-      { name: '정잭사...', champion: 'Yuumi' },
-    ],
-    blueTeam: [
-      { name: '정잭오...', champion: 'Kalista' },
-      { name: '정잭육...', champion: 'Amumu' },
-      { name: '정잭칠...', champion: 'Sejuani' },
-      { name: '정잭팔...', champion: 'Graves' },
-      { name: '정잭구...', champion: 'Galio' },
-    ],
-  });
+export const GameInfo = (props: fileData) => {
+  async function getData() {
+    try {
+      //응답 성공
+      const response = await axios.get(
+        urlGameData(props.fileName.replace('.rofl', '')),
+      );
+      setGame(response.data as gameData);
+      setLoading(false);
+    } catch (error) {
+      //응답 실패
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, [props]);
+
+  const [game, setGame] = useState<gameData>();
+  const [loading, setLoading] = useState(true);
 
   return (
-    <ReplayPreviewWrapper sort={false}>
-      <UsersInfoWrapper>
-        <TeamWrapper>
-          {game.redTeam.map((_, i) => {
-            return (
-              <UserWrapper key={i}>
-                <UserImgWrapper>
-                  <UserImg
-                    src={formatChampion({
-                      championName: `${game.redTeam[i].champion}`,
-                    })}
-                  />
-                </UserImgWrapper>
-                <UserName team={Team.RED}>{game.blueTeam[i].name}</UserName>
-              </UserWrapper>
-            );
-          })}
-        </TeamWrapper>
-        <TeamWrapper>
-          {game.blueTeam.map((_, i) => {
-            return (
-              <UserWrapper key={i}>
-                <UserName team={Team.BLUE}>{game.blueTeam[i].name}</UserName>
-                <UserImgWrapper>
-                  <UserImg
-                    src={formatChampion({
-                      championName: `${game.blueTeam[i].champion}`,
-                    })}
-                  />
-                </UserImgWrapper>
-              </UserWrapper>
-            );
-          })}
-        </TeamWrapper>
-      </UsersInfoWrapper>
-      2022-09-11 · 패치 12.17
+    <ReplayPreviewWrapper sort={loading}>
+      {loading ? (
+        <>
+          <Lottie
+            animationData={lottie}
+            style={{ width: '60px', height: '60px' }}
+          />
+          데이터 불러오는 중...
+        </>
+      ) : (
+        <>
+          <UsersInfo game={game as gameData} />
+          {game?.gameCreation.slice(0, 10)} · 패치{' '}
+          {game?.gameVersion.slice(0, 5)}
+        </>
+      )}
     </ReplayPreviewWrapper>
   );
 };

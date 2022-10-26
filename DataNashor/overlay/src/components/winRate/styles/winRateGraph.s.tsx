@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import * as Palette from "../../../assets/colorPalette";
+import styled from 'styled-components';
+import * as Palette from '../../../assets/colorPalette';
 
 export const Graph = styled.div`
   display: flex;

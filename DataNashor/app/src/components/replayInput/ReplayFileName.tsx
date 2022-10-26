@@ -1,24 +1,29 @@
 import { ReplayFileNameWrapper } from './styles/replayFileName.s';
-import { useDropzone, FileWithPath } from 'react-dropzone';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { TargetBox } from '../replayInput/DnDTargetBox';
 
-export const ReplayFileName = () => {
-  const [fileDropped, setFileDropped] = useState(false);
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
-  const files = acceptedFiles.map((file: FileWithPath) => (
-    <u key={file.path}>{file.name}</u>
-  ));
+interface propsType {
+  //부모 컴포넌트로 파일명 전달.
+  setFileInfo: Function;
+}
+export const ReplayFileName = (props: propsType) => {
+  const handleFileDrop = useCallback((item: { files: any[] }) => {
+    if (item) {
+      props.setFileInfo({
+        fileName: `${item.files[0].name}`,
+        filePath: `${item.files[0].path}`,
+      });
+    }
+  }, []);
 
+  //ReplayFileNameWrapper
   return (
-    <div {...getRootProps({ className: 'dropzone' })}>
-      <input {...getInputProps()} />
-      <ReplayFileNameWrapper
-        fileDropped={fileDropped}
-        onDrop={() => setFileDropped(true)}
-        onClick={() => setFileDropped(true)}
-      >
-        {fileDropped ? files : <u>드래그해서 파일 추가하기...</u>}
-      </ReplayFileNameWrapper>
-    </div>
+    <ReplayFileNameWrapper>
+      <DndProvider backend={HTML5Backend}>
+        <TargetBox onDrop={handleFileDrop} setFileInfo={props.setFileInfo} />
+      </DndProvider>
+    </ReplayFileNameWrapper>
   );
 };
