@@ -7,6 +7,7 @@ import { TargetBox } from '../replayInput/DnDTargetBox';
 interface propsType {
   //부모 컴포넌트로 파일명 전달.
   setFileInfo: Function;
+  setIsFileInput: Function;
 }
 export const ReplayFileName = (props: propsType) => {
   const handleFileDrop = useCallback((item: { files: any[] }) => {
@@ -15,6 +16,7 @@ export const ReplayFileName = (props: propsType) => {
         fileName: `${item.files[0].name}`,
         filePath: `${item.files[0].path}`,
       });
+      props.setIsFileInput(true);
     }
   }, []);
 

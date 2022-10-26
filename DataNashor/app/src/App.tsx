@@ -32,12 +32,16 @@ const App = () => {
   //코드 인풋 컴포내에서, 코드의 불일치와, 코드 입력때의 코드인풋 컴포 유지.
   const [isValidatedCode, setIsValidatedCode] = useState<boolean>(false);
   const [endValidation, setEndValidation] = useState<boolean>(false);
+  const [isFileInput, setIsFileInput] = useState<boolean>(false);
 
   return (
     <AppWrapper>
       <Header />
       <ContentWrapper>
-        <ReplayInput isValidatedCode={isValidatedCode} />
+        <ReplayInput
+          isValidatedCode={isValidatedCode}
+          setIsFileInput={setIsFileInput}
+        />
         {isValidatedCode ? (
           <OutputWrapper>
             {endValidation ? (
@@ -50,6 +54,7 @@ const App = () => {
           <CodeInput
             isValidatedCode={isValidatedCode}
             setIsValidatedCode={setIsValidatedCode}
+            isFileInput={isFileInput}
           />
         )}
       </ContentWrapper>

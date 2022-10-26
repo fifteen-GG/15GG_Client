@@ -10,6 +10,7 @@ import { useState } from 'react';
 
 interface propsType {
   isValidatedCode: boolean;
+  setIsFileInput: Function;
 }
 interface fileInfoType {
   fileName: string;
@@ -36,7 +37,10 @@ export const ReplayInput = (props: propsType) => {
       ) : (
         <GameInfo fileName={fileInfo.fileName} />
       )}
-      <ReplayFileName setFileInfo={setFileInfo} />
+      <ReplayFileName
+        setFileInfo={setFileInfo}
+        setIsFileInput={props.setIsFileInput}
+      />
     </ReplayInputWrapper>
   );
 };
