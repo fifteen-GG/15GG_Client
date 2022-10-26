@@ -17,8 +17,8 @@ export const CodeInputField = (props: propsType) => {
     let updatedCode = [...props.code];
     updatedCode[index] = e.target.value.toUpperCase();
     //특수문자 입력 제한
-    if (regExp.test(updatedCode[index])) {
-      updatedCode[index] = updatedCode[index].replace(regExp, '');
+    if (!regExp.test(updatedCode[index])) {
+      updatedCode[index] = updatedCode[index].replace(updatedCode[index], '');
     }
     props.setCode(updatedCode);
 
