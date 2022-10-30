@@ -8,6 +8,8 @@ requests = "*"
 bs4 = "*"
 grequests = "*"
 pandas = "*"
+schedule = "*"
+datanashor = "*"
 
 [dev-packages]
 autopep8 = "*"

@@ -13,8 +13,10 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 LIVE_CLIENT_API_ROOT = 'https://127.0.0.1:2999/liveclientdata/'
-game_dir = 'C:/Riot Games/League of Legends'
-replay_dir = 'C:/Users/James/Documents/League of Legends/Replays'
+# game_dir = 'C:/Riot Games/League of Legends'
+# replay_dir = 'C:/Users/James/Documents/League of Legends/Replays'
+game_dir = 'E:/Riot Games/League of Legends'
+replay_dir = 'C:/Users/luciancah/Desktop/Replays'
 replay_files = os.listdir(replay_dir)
 
 player_data_keys = [
@@ -55,6 +57,9 @@ def parse_replay(replay_file_name):
 
             if not loaded:
                 loaded = True
+                sleep(1)
+                gw.getWindowsWithTitle(
+                    'League of Legends (TM) Client')[0].maximize()
 
             try:
                 current_timestamp = {
@@ -64,7 +69,7 @@ def parse_replay(replay_file_name):
                         for champ in data
                     ]}
                 if 0 < game_time < 30:
-                    send_serial('COM7')
+                    send_serial('COM13')
 
                 for player in current_timestamp['player_data']:
                     player['items'] = [
