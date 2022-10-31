@@ -4,6 +4,7 @@ import json
 import schedule
 from datanashor.parser import ReplayParser
 
+
 def download_replay(port, token, gameId):
     url = f"https://127.0.0.1:{port}/lol-replays/v1/rofls/{gameId}/download"
     print('tok:', token, gameId)
@@ -24,17 +25,23 @@ def download_replay(port, token, gameId):
     return req
 
 
-def main(json_path):
-    parser = ReplayParser() # add game_dir if Riot Client is not installed in default location
-    res = parser.get_client_metadata()
+def main():
+    # add game_dir if Riot Client is not installed in default location
+    parser = ReplayParser()
+    metadata = parser.get_client_metadata()
 
-    with open(json_path, 'r') as file:
-        replay_list = json.load(file)
+    res = requests.get(
+        url='http://3.38.169.77:8000/api/v1/train_game'
+    )
 
-    for replay in replay_list['match_id']:
-        replay_name = replay.split('-')[1]
+    replay_list = res.json()
+
+    for replay in replay_list:
+        replay_name = replay['match_id'].split('-')[1]
+        print(replay_name)
         if replay_name.strip()[-1] == '3' or replay_name.strip()[-1] == '4':
-            download_replay(res['port'], res['token'], replay_name)
+            download_replay(metadata['port'], metadata['token'], replay_name)
+
 
 # download scheduling for every 6 hours
 for i in ["06:00", "12:00", "18:00", "00:00"]:
