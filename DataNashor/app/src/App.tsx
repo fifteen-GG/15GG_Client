@@ -1,15 +1,15 @@
-import styled from "styled-components";
-import * as Palette from "./assets/colorPalette";
-import { CodeInput } from "./components/codeInput";
-import { Header } from "./components/header";
-import { ReplayInput } from "./components/replayInput";
-import { TimeOutput } from "./components/timeoutput/AnalysisTime";
-import { WinRate } from "./components/winRate";
+import styled from 'styled-components';
+import * as Palette from './assets/colorPalette';
+import { CodeInput } from './components/codeInput';
+import { Header } from './components/header';
+import { ReplayInput } from './components/replayInput';
+import { TimeOutput } from './components/timeoutput/AnalysisTime';
+import { WinRate } from './components/winRate';
 import { AfterRunAnounce } from './components/timeoutput/AnalysisDone';
 import { OutputWrapper } from './components/timeoutput/styles/analysisTime.s';
-import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import backGround from "./assets/svg/nashor_or_bg.svg";
+import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import backGround from './assets/svg/nashor_or_bg.svg';
 
 const AppWrapper = styled.div`
   box-sizing: border-box;
@@ -73,7 +73,9 @@ const App = () => {
                 {isValidatedCode ? (
                   <OutputWrapper>
                     {endValidation ? (
-                      <AfterRunAnounce setIsValidatedCode={setIsValidatedCode} />
+                      <AfterRunAnounce
+                        setIsValidatedCode={setIsValidatedCode}
+                      />
                     ) : (
                       <TimeOutput />
                     )}
