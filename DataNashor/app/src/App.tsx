@@ -52,8 +52,10 @@ const AppWrapper2 = styled.div`
 `;
 
 const App = () => {
+  const [isValidatedCode, setIsValidatedCode] = useState<boolean>(false);
+  const [endValidation, setEndValidation] = useState<boolean>(false);
+  const [isFileInput, setIsFileInput] = useState<boolean>(false);
   const [codeValidation, setCodeValidation] = useState(false);
-  const [endValidation, setEndValidation] = useState(false);
 
   return (
     <BrowserRouter>
@@ -64,20 +66,24 @@ const App = () => {
             <AppWrapper>
               <Header />
               <ContentWrapper>
-                <ReplayInput codeValidation={codeValidation} />
-                {codeValidation ? (
+                <ReplayInput
+                  isValidatedCode={isValidatedCode}
+                  setIsFileInput={setIsFileInput}
+                />
+                {isValidatedCode ? (
                   <OutputWrapper>
                     {endValidation ? (
-                       <AfterRunAnounce setCodeValidation={setCodeValidation} />
+                      <AfterRunAnounce setIsValidatedCode={setIsValidatedCode} />
                     ) : (
-                       <TimeOutput />
+                      <TimeOutput />
                     )}
                   </OutputWrapper>
-                 ) : (
-                 <CodeInput
-                   codeValidation={codeValidation}
-                   setCodeValidation={setCodeValidation}
-                 />
+                ) : (
+                  <CodeInput
+                    isValidatedCode={isValidatedCode}
+                    setIsValidatedCode={setIsValidatedCode}
+                    isFileInput={isFileInput}
+                  />
                 )}
               </ContentWrapper>
             </AppWrapper>

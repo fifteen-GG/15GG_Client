@@ -13,18 +13,18 @@ const CodeInputHeader = () => {
   return <CodeInputHeaderWrapper>데이터 코드 입력</CodeInputHeaderWrapper>;
 };
 interface propsType {
-  codeValidation: boolean;
-  setCodeValidation: React.Dispatch<React.SetStateAction<boolean>>;
+  isValidatedCode: boolean;
+  setIsValidatedCode: React.Dispatch<React.SetStateAction<boolean>>;
+  isFileInput: boolean;
 }
 export const CodeInput = (props: propsType) => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const dummyCode = ['1', '2', 'A', 'B', 'C', '3'];
   const [inputBoxInit, setInputBoxInit] = useState(true);
-
   const onClick = () => {
     {
-      JSON.stringify(code) === JSON.stringify(dummyCode)
-        ? props.setCodeValidation(true)
+      JSON.stringify(code) === JSON.stringify(dummyCode) && props.isFileInput
+        ? props.setIsValidatedCode(true)
         : setInputBoxInit(false);
     }
   };
