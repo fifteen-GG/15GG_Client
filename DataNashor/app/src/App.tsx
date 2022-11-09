@@ -1,15 +1,18 @@
-import styled from "styled-components";
-import * as Palette from "./assets/colorPalette";
-import { CodeInput } from "./components/codeInput";
-import { Header } from "./components/header";
-import { ReplayInput } from "./components/replayInput";
-import { TimeOutput } from "./components/timeoutput/AnalysisTime";
-import { WinRate } from "./components/winRate";
+import styled from 'styled-components';
+import * as Palette from './assets/colorPalette';
+import { CodeInput } from './components/codeInput';
+import { Header } from './components/header';
+import { ReplayInput } from './components/replayInput';
+import { TimeOutput } from './components/timeoutput/AnalysisTime';
+import { WinRate } from './components/winRate';
 import { AfterRunAnounce } from './components/timeoutput/AnalysisDone';
 import { OutputWrapper } from './components/timeoutput/styles/analysisTime.s';
-import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import backGround from "./assets/svg/nashor_or_bg.svg";
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import backGround from './assets/svg/nashor_or_bg.svg';
+//electron
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
 
 const AppWrapper = styled.div`
   box-sizing: border-box;
@@ -54,6 +57,13 @@ const AppWrapper2 = styled.div`
 const App = () => {
   const [codeValidation, setCodeValidation] = useState(false);
   const [endValidation, setEndValidation] = useState(false);
+  useEffect(
+    () =>
+      ipcRenderer.on('MSG_FROM_BACKGROUND', (event: any, args: any) => {
+        console.log('MSG_FROM_BACKGROUND', args);
+      }),
+    [],
+  );
 
   return (
     <BrowserRouter>
@@ -68,16 +78,16 @@ const App = () => {
                 {codeValidation ? (
                   <OutputWrapper>
                     {endValidation ? (
-                       <AfterRunAnounce setCodeValidation={setCodeValidation} />
+                      <AfterRunAnounce setCodeValidation={setCodeValidation} />
                     ) : (
-                       <TimeOutput />
+                      <TimeOutput />
                     )}
                   </OutputWrapper>
-                 ) : (
-                 <CodeInput
-                   codeValidation={codeValidation}
-                   setCodeValidation={setCodeValidation}
-                 />
+                ) : (
+                  <CodeInput
+                    codeValidation={codeValidation}
+                    setCodeValidation={setCodeValidation}
+                  />
                 )}
               </ContentWrapper>
             </AppWrapper>
