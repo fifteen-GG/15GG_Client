@@ -93,6 +93,7 @@ let cache = {
 // a window object outside the function scope prevents
 // the object from being garbage collected
 let hiddenWindow;
+let currentPid;
 
 // This event listener will listen for request
 // from visible renderer process
@@ -128,9 +129,17 @@ ipcMain.on('MSG_FROM_BACKGROUND', (event, args) => {
   console.log('electron.js MSG_FROM_BACKGROUND', args);
   mainWindow.webContents.send('MESSAGE_FROM_BACKGROUND_VIA_MAIN', args.message);
 });
+
+ipcMain.on('PID_FROM_BACKGROUND', (event, args) => {
+  currentPid = args.message;
+  log.info('Started background process with PID', currentPid);
+  mainWindow.webContents.send('PID_FROM_BACKGROUND_VIA_MAIN', args.message);
+});
+
 ipcMain.on('BACKGROUND_READY', (event, args) => {
   console.log('electron.js BACKGROUND_READY', args);
   event.reply('START_PROCESSING', {
     data: cache.data,
+    currentPid: currentPid,
   });
 });
