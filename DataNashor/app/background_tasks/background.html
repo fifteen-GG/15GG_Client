@@ -2,8 +2,11 @@
   const { PythonShell } = require('python-shell');
   const { ipcRenderer } = require('electron');
   const path = require('path');
+  const log = require('electron-log');
+  console.log = log.log;
 
   ipcRenderer.on('START_PROCESSING', (event, args) => {
+    console.log('html START_PROCESSING', args);
     const { data } = args;
     let pyshell = new PythonShell(
       path.join(__dirname, '/../scripts/factorial.py'),
@@ -14,7 +17,8 @@
     );
 
     pyshell.on('message', function (results) {
-      ipcRenderer.send('MESSAGE_FROM_BACKGROUND', { message: results });
+      console.log('html message', results);
+      ipcRenderer.send('MSG_FROM_BACKGROUND', { message: results });
     });
   });
 

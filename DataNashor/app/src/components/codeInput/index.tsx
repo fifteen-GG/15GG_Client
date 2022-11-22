@@ -9,6 +9,9 @@ import {
   StartAnalysisButton,
 } from './styles/codeInput.s';
 
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
+
 const CodeInputHeader = () => {
   return <CodeInputHeaderWrapper>데이터 코드 입력</CodeInputHeaderWrapper>;
 };
@@ -22,10 +25,16 @@ export const CodeInput = (props: propsType) => {
   const [inputBoxInit, setInputBoxInit] = useState(true);
 
   const onClick = () => {
-    {
-      JSON.stringify(code) === JSON.stringify(dummyCode)
-        ? props.setCodeValidation(true)
-        : setInputBoxInit(false);
+    if (JSON.stringify(code) === JSON.stringify(dummyCode)) {
+      props.setCodeValidation(true);
+      ipcRenderer.send('START_BACKGROUND_VIA_MAIN', {
+        number: 25,
+      }); // 잘 감
+      ipcRenderer.on('START_PROCESSING', (event: any, args: any) => {
+        console.log('app.tsx START_PROCESSING', args.message);
+      });
+    } else {
+      setInputBoxInit(false);
     }
   };
 

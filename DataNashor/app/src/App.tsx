@@ -10,7 +10,7 @@ import { OutputWrapper } from './components/timeoutput/styles/analysisTime.s';
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import backGround from './assets/svg/nashor_or_bg.svg';
-//electron
+
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
@@ -56,14 +56,21 @@ const AppWrapper2 = styled.div`
 
 const App = () => {
   const [codeValidation, setCodeValidation] = useState(false);
-  const [endValidation, setEndValidation] = useState(false);
-  useEffect(
-    () =>
-      ipcRenderer.on('MSG_FROM_BACKGROUND', (event: any, args: any) => {
-        console.log('MSG_FROM_BACKGROUND', args);
-      }),
-    [],
-  );
+  const [endValidation, setEndValidation] = useState(true);
+
+  useEffect(() => {
+    console.log('shell start');
+    ipcRenderer.send('MSG_FROM_BACKGROUND', { message: 'hello' });
+    ipcRenderer.on('MSG_FROM_BACKGROUND', (event: any, args: any) => {
+      console.log('app.tsx MSG_FROM_BACKGROUND', args); // 이게 안됨
+    });
+    // ipcRenderer.send('START_BACKGROUND_VIA_MAIN', {
+    //   number: 25,
+    // }); // 잘 감
+    // ipcRenderer.on('START_PROCESSING', (event: any, args: any) => {
+    //   console.log('app.tsx START_PROCESSING', args.message);
+    // });
+  }, [ipcRenderer]);
 
   return (
     <BrowserRouter>
