@@ -5,12 +5,16 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import { InputField } from './styles/replayFileName.s';
 import { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { setReplayName } from '../../redux/Actions';
+
 export interface TargetBoxProps {
   onDrop: (item: { files: any[] }) => void;
   setFileInfo: Function;
 }
 
 export const TargetBox: FC<TargetBoxProps> = props => {
+  const dispatch = useDispatch();
   let [anouncement, setAnouncement] = useState('드래그 해서 파일 업로드');
   const { onDrop } = props;
   const [{ canDrop, isOver }, drop] = useDrop(
@@ -40,6 +44,8 @@ export const TargetBox: FC<TargetBoxProps> = props => {
       filePath: `${e.target.files[0].path}`,
     });
     setAnouncement(e.target.files[0].name);
+    dispatch(setReplayName(e.target.files[0].name));
+    console.log(e.target.files[0].name);
   };
 
   return (
