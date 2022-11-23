@@ -1,9 +1,11 @@
-import { HeaderWrapper, LogoWrapper } from "./styles/header.s";
+import { HeaderWrapper, LogoWrapper } from './styles/header.s';
+import gg_logo_full from '../../assets/svg/gg_logo_full.svg';
+import styled from 'styled-components';
 
 export const Header = () => {
   return (
     <HeaderWrapper>
-      <LogoWrapper>로고 자리</LogoWrapper>
+      <LogoWrapper src={gg_logo_full} />
     </HeaderWrapper>
   );
 };
