@@ -27,9 +27,10 @@ export const CodeInput = (props: propsType) => {
   const onClick = () => {
     if (JSON.stringify(code) === JSON.stringify(dummyCode)) {
       props.setCodeValidation(true);
-      ipcRenderer.send('START_BACKGROUND_VIA_MAIN', {
-        number: 25,
-      }); // 잘 감
+      ipcRenderer.send('START_BACKGROUND_VIA_MAIN', {});
+      // ipcRenderer.send('START_BACKGROUND_VIA_MAIN', {
+      //   replay_name: 'KR-1234567890.rofl',
+      // }); // todo
       ipcRenderer.on('START_PROCESSING', (event: any, args: any) => {
         console.log('app.tsx START_PROCESSING', args.message);
       });

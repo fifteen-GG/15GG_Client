@@ -7,6 +7,7 @@ def factorial(x):
     if x == 1:
         return 1
     else:
+        print('asfdsadf')
         return x * factorial(x-1)
 
 
