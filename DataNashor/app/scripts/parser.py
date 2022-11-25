@@ -101,6 +101,7 @@ async def nashor_client():
                     if game_time_count == 3:
                         os.system(
                             "taskkill /f /im \"League of Legends.exe\"")
+                        websocket.send('Game ended')
                         websocket.close()
                         break
                     prev_game_time = game_time

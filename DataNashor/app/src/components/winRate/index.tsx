@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import * as Palette from '../../assets/colorPalette';
 import { LeagueTeams } from './LeagueTeams';
 import WinRateGraph from './WinRateGraph';
-import { useSocket, SocketStatus } from './useSocket';
 import { useEffect, useState } from 'react';
 const { ipcRenderer } = window.require('electron');
 
@@ -26,8 +25,8 @@ const EmptyWinrate = styled.div`
 
 export const WinRate = () => {
   ipcRenderer.on('MATCH_FROM_BACKGROUND', (event: any, args: any) => {
-    const replayName = args;
-    console.log(args);
+    const replayName = args.matchName;
+    console.log(args.matchName);
     if (replayName) {
       setMatchId(replayName.replace('.rofl', ''));
     }
@@ -66,26 +65,27 @@ export const WinRate = () => {
       setStatus(1);
     };
     ws.onclose = () => {
-      setStatus(0);
+      setStatus(2);
       console.log('onclose');
     };
   }, [matchId]);
 
   useEffect(() => {
     if (parse) {
-      let data = JSON.parse(responseMessage);
-      setGameData(data);
-      setWinRate(
-        data.match_data[data.match_data.length - 1].blue_team_win_rate,
-      );
+      if (responseMessage !== 'Game ended') {
+        let data = JSON.parse(responseMessage);
+        setGameData(data);
+        setWinRate(
+          data.match_data[data.match_data.length - 1].blue_team_win_rate,
+        );
+      }
     }
   }, [parse, responseMessage]);
 
-  return status === 0 ? (
+  return status === 0 || status === 2 ? (
     <EmptyWinrate>승률 대기중...</EmptyWinrate>
   ) : (
     <WinRateWrapper>
-      {matchId}
       <LeagueTeams />
       <WinRateGraph winRate={winRate} />
     </WinRateWrapper>
