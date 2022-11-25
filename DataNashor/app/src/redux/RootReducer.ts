@@ -1,5 +1,6 @@
 const initialState = {
   replayName: '',
+  liveStatus: false,
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -9,6 +10,13 @@ const rootReducer = (state = initialState, action: any) => {
         ...state,
         replayName: action.payload,
       };
+    case 'SET_LIVE_STATUS':
+      return {
+        ...state,
+        replayName: action.payload,
+      };
+    default:
+      return state;
   }
 };
 

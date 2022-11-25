@@ -60,62 +60,88 @@ export const options = {
     },
     title: {
       display: false,
-      text: 'Chart.js Horizontal Bar Chart',
     },
   },
 };
 
 const labels = [''];
-
-export const data = {
+const data = {
   labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: [80.4],
-      borderColor: '#e84057',
-      backgroundColor: '#e84057',
-      borderWidth: 0,
-    },
-    {
-      label: 'Dataset 2',
-      data: [100],
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: '#5383e8',
-      borderWidth: 0,
-    },
-  ],
 };
-const WinRateGraph = () => {
+interface propsType {
+  winRate: number;
+}
+// const data = {
+//   labels,
+//   datasets: [
+//     {
+//       label: 'Dataset 1',
+//       data: [80.4],
+//       borderColor: '#e84057',
+//       backgroundColor: '#e84057',
+//       borderWidth: 0,
+//     },
+//     {
+//       label: 'Dataset 2',
+//       data: [100],
+//       borderColor: 'rgb(53, 162, 235)',
+//       backgroundColor: '#5383e8',
+//       borderWidth: 0,
+//     },
+//   ],
+// };
+const WinRateGraph = (props: propsType) => {
   const chartRef = useRef<ChartJS>(null);
   const [chartData, setChartData] = useState<ChartData<'bar'>>({
     datasets: [],
   });
 
   useEffect(() => {
+    // console.log(props.winRate);
     const chart = chartRef.current;
-
     if (!chart) {
       return;
     }
     const chartData = {
       ...data,
-      datasets: data.datasets.map(dataset => ({
-        ...dataset,
-      })),
+      // datasets: data.datasets.map(dataset => ({
+      //   ...dataset,
+      //   data: [100 - props?.winRate * 100, 100],
+      // })),
+      datasets: [
+        {
+          label: 'Dataset 1',
+          data: [100 - props.winRate * 100],
+          borderColor: '#e84057',
+          backgroundColor: '#e84057',
+          borderWidth: 0,
+        },
+        {
+          label: 'Dataset 2',
+          data: [100],
+          borderColor: 'rgb(53, 162, 235)',
+          backgroundColor: '#5383e8',
+          borderWidth: 0,
+        },
+      ],
     };
-
     setChartData(chartData);
-  }, []);
+  }, [props.winRate]);
   return (
     <Graph>
       <BarWrapper>
-        <Chart type="bar" data={data} options={options} height="5px" />
+        <Chart
+          type="bar"
+          ref={chartRef}
+          data={chartData}
+          options={options}
+          height="5px"
+        />
       </BarWrapper>
       <RateWrapper>
-        <WinningRate>80.4</WinningRate>
+        <WinningRate>{(100 - props.winRate * 100).toFixed(1)}</WinningRate>
         <GraphTitle>AI 승률</GraphTitle>
-        <WinningRate>19.6</WinningRate>
+        <WinningRate>{(props.winRate * 100).toFixed(1)}</WinningRate>
       </RateWrapper>
     </Graph>
   );

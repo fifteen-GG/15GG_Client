@@ -53,8 +53,8 @@ function createWindow() {
     mainWindow.webContents.openDevTools({ mode: 'detach' });
 
     window2.webContents.openDevTools({ mode: 'detach', activate: false });
-    overlayWindow.attachTo(window2, '제목 없음 - Windows 메모장');
-    // overlayWindow.attachTo(window2, 'League of Legends (TM) Client');
+    // overlayWindow.attachTo(window2, '제목 없음 - Windows 메모장');
+    overlayWindow.attachTo(window2, 'League of Legends (TM) Client');
     overlayWindow.on('focus', ev => {
       console.log('focus', ev);
     });
@@ -98,7 +98,7 @@ ipcMain.on('START_BACKGROUND_VIA_MAIN', (event, args) => {
     slashes: true,
   });
   hiddenWindow = new BrowserWindow({
-    show: false,
+    show: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -113,6 +113,7 @@ ipcMain.on('START_BACKGROUND_VIA_MAIN', (event, args) => {
   });
 
   cache.data = args.number;
+  console.log('cache.data', cache.data);
 });
 
 ipcMain.on('MSG_FROM_BACKGROUND', (event, args) => {
@@ -124,6 +125,18 @@ ipcMain.on('PID_FROM_BACKGROUND', (event, args) => {
   currentPid = args.message;
   log.info('Started background process with PID', currentPid);
   mainWindow.webContents.send('PID_FROM_BACKGROUND_VIA_MAIN', args.message);
+});
+
+ipcMain.on('MATCH_FROM_BACKGROUND', (event, args) => {
+  matchName = args.message;
+  log.info('Match ID with name', matchName);
+  window2.webContents.send('MATCH_FROM_BACKGROUND', { matchName });
+});
+
+ipcMain.on('STATUS_FROM_BACKGROUND', (event, args) => {
+  gameStatus = args.message;
+  log.info('Start Status', gameStatus);
+  window2.webContents.send('STATUS_FROM_BACKGROUND', { gameStatus });
 });
 
 ipcMain.on('BACKGROUND_READY', (event, args) => {

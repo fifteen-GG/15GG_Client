@@ -5,8 +5,10 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import { InputField } from './styles/replayFileName.s';
 import { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setReplayName } from '../../redux/Actions';
+
+const { ipcRenderer } = window.require('electron');
 
 export interface TargetBoxProps {
   onDrop: (item: { files: any[] }) => void;
@@ -45,7 +47,9 @@ export const TargetBox: FC<TargetBoxProps> = props => {
     });
     setAnouncement(e.target.files[0].name);
     dispatch(setReplayName(e.target.files[0].name));
-    console.log(e.target.files[0].name);
+    ipcRenderer.send('MATCH_FROM_BACKGROUND', {
+      message: e.target.files[0].name,
+    });
   };
 
   return (
