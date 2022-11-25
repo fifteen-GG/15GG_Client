@@ -10,8 +10,8 @@ import { OutputWrapper } from './components/timeoutput/styles/analysisTime.s';
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import backGround from './assets/svg/nashor_or_bg.svg';
-import { Provider } from 'react-redux';
-import Store from './redux/Store';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLiveStatus } from './redux/Actions';
 
 const AppWrapper = styled.div`
   box-sizing: border-box;
@@ -55,52 +55,61 @@ const AppWrapper2 = styled.div`
 
 const App = () => {
   const [codeValidation, setCodeValidation] = useState(false);
-  const [endValidation, setEndValidation] = useState(true);
+  const [endValidation, setEndValidation] = useState(false);
+  const liveStatus = useSelector((state: any) => state.liveStatus);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(liveStatus);
+    // if (liveStatus === 2) {
+    //   console.log(
+    //     'askdfjasiojfisadojfiaosjfoasjfajoisfdijsafiaosdfjasidofjisao',
+    //   );
+    //   setEndValidation(true);
+    //   dispatch(setLiveStatus(2));
+    // }
+  }, [liveStatus]);
 
   return (
-    <Provider store={Store}>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="app"
-            element={
-              <AppWrapper>
-                <Header />
-                <ContentWrapper>
-                  <ReplayInput codeValidation={codeValidation} />
-                  {codeValidation ? (
-                    <OutputWrapper>
-                      {endValidation ? (
-                        <AfterRunAnounce
-                          setCodeValidation={setCodeValidation}
-                        />
-                      ) : (
-                        <TimeOutput />
-                      )}
-                    </OutputWrapper>
-                  ) : (
-                    <CodeInput
-                      codeValidation={codeValidation}
-                      setCodeValidation={setCodeValidation}
-                    />
-                  )}
-                </ContentWrapper>
-              </AppWrapper>
-            }
-          ></Route>
-          <Route
-            path="overlay"
-            element={
-              <OverlayPlaceWrapper>
-                <AppWrapper2>
-                  <WinRate />
-                </AppWrapper2>
-              </OverlayPlaceWrapper>
-            }
-          ></Route>
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="app"
+          element={
+            <AppWrapper>
+              <Header />
+              <ContentWrapper>
+                <ReplayInput codeValidation={codeValidation} />
+                {codeValidation ? (
+                  <OutputWrapper>
+                    {endValidation ? (
+                      <AfterRunAnounce setCodeValidation={setCodeValidation} />
+                    ) : (
+                      <TimeOutput />
+                    )}
+                  </OutputWrapper>
+                ) : (
+                  <CodeInput
+                    codeValidation={codeValidation}
+                    setCodeValidation={setCodeValidation}
+                  />
+                )}
+              </ContentWrapper>
+            </AppWrapper>
+          }
+        ></Route>
+        <Route
+          path="overlay"
+          element={
+            <OverlayPlaceWrapper>
+              <AppWrapper2>
+                <WinRate />
+              </AppWrapper2>
+            </OverlayPlaceWrapper>
+          }
+        ></Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 

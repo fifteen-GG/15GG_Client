@@ -1,6 +1,7 @@
 const initialState = {
   replayName: '',
-  liveStatus: false,
+  liveStatus: 0,
+  winRate: 0,
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -11,6 +12,11 @@ const rootReducer = (state = initialState, action: any) => {
         replayName: action.payload,
       };
     case 'SET_LIVE_STATUS':
+      return {
+        ...state,
+        replayName: action.payload,
+      };
+    case 'SET_WIN_RATE':
       return {
         ...state,
         replayName: action.payload,
