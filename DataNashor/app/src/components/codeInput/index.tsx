@@ -8,6 +8,7 @@ import {
   CodeInputWrapper,
   StartAnalysisButton,
 } from './styles/codeInput.s';
+import { useDispatch, useSelector } from 'react-redux';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -23,14 +24,17 @@ export const CodeInput = (props: propsType) => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const dummyCode = ['1', '2', 'A', 'B', 'C', '3'];
   const [inputBoxInit, setInputBoxInit] = useState(true);
+  const replayName = useSelector((state: any) => state.replayName);
 
   const onClick = () => {
-    if (JSON.stringify(code) === JSON.stringify(dummyCode)) {
+    if (
+      JSON.stringify(code) === JSON.stringify(dummyCode) &&
+      replayName.length
+    ) {
       props.setCodeValidation(true);
-      ipcRenderer.send('START_BACKGROUND_VIA_MAIN', {});
-      // ipcRenderer.send('START_BACKGROUND_VIA_MAIN', {
-      //   replay_name: 'KR-1234567890.rofl',
-      // }); // todo
+      console.log(replayName);
+      ipcRenderer.send('START_BACKGROUND_VIA_MAIN', { number: replayName });
+      ipcRenderer.send('STATUS_FROM_BACKGROUND', { message: 1 });
       ipcRenderer.on('START_PROCESSING', (event: any, args: any) => {
         console.log('app.tsx START_PROCESSING', args.message);
       });
@@ -57,6 +61,7 @@ export const CodeInput = (props: propsType) => {
       <StartAnalysisButton onClick={() => onClick()}>
         분석 시작
       </StartAnalysisButton>
+      {replayName}
     </CodeInputWrapper>
   );
 };
