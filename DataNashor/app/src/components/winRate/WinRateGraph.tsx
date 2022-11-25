@@ -71,25 +71,7 @@ const data = {
 interface propsType {
   winRate: number;
 }
-// const data = {
-//   labels,
-//   datasets: [
-//     {
-//       label: 'Dataset 1',
-//       data: [80.4],
-//       borderColor: '#e84057',
-//       backgroundColor: '#e84057',
-//       borderWidth: 0,
-//     },
-//     {
-//       label: 'Dataset 2',
-//       data: [100],
-//       borderColor: 'rgb(53, 162, 235)',
-//       backgroundColor: '#5383e8',
-//       borderWidth: 0,
-//     },
-//   ],
-// };
+
 const WinRateGraph = (props: propsType) => {
   const chartRef = useRef<ChartJS>(null);
   const [chartData, setChartData] = useState<ChartData<'bar'>>({
@@ -97,7 +79,6 @@ const WinRateGraph = (props: propsType) => {
   });
 
   useEffect(() => {
-    // console.log(props.winRate);
     const chart = chartRef.current;
     if (!chart) {
       return;
@@ -111,16 +92,16 @@ const WinRateGraph = (props: propsType) => {
       datasets: [
         {
           label: 'Dataset 1',
-          data: [100 - props.winRate * 100],
-          borderColor: '#e84057',
-          backgroundColor: '#e84057',
+          data: [props.winRate * 100],
+          borderColor: '#5383e8',
+          backgroundColor: '#5383e8',
           borderWidth: 0,
         },
         {
           label: 'Dataset 2',
           data: [100],
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: '#5383e8',
+          borderColor: '#e84057',
+          backgroundColor: '#e84057',
           borderWidth: 0,
         },
       ],
@@ -139,9 +120,9 @@ const WinRateGraph = (props: propsType) => {
         />
       </BarWrapper>
       <RateWrapper>
-        <WinningRate>{(100 - props.winRate * 100).toFixed(1)}</WinningRate>
-        <GraphTitle>AI 승률</GraphTitle>
         <WinningRate>{(props.winRate * 100).toFixed(1)}</WinningRate>
+        <GraphTitle>AI 승률</GraphTitle>
+        <WinningRate>{(100 - props.winRate * 100).toFixed(1)}</WinningRate>
       </RateWrapper>
     </Graph>
   );
