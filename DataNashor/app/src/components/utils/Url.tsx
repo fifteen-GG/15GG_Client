@@ -1,4 +1,4 @@
-const GG_API_ROOT = 'http://52.79.241.124:8000/api/v1/riot/match/preview/';
+const GG_API_ROOT = 'http://3.36.71.186:8000/api/v1/riot/match/preview/';
 
 const OPGG_API_ROOT = 'https://opgg-static.akamaized.net/images/lol';
 

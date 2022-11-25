@@ -10,6 +10,8 @@ import { OutputWrapper } from './components/timeoutput/styles/analysisTime.s';
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import backGround from './assets/svg/nashor_or_bg.svg';
+import { Provider } from 'react-redux';
+import Store from './redux/Store';
 
 const AppWrapper = styled.div`
   box-sizing: border-box;
@@ -56,45 +58,49 @@ const App = () => {
   const [endValidation, setEndValidation] = useState(true);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="app"
-          element={
-            <AppWrapper>
-              <Header />
-              <ContentWrapper>
-                <ReplayInput codeValidation={codeValidation} />
-                {codeValidation ? (
-                  <OutputWrapper>
-                    {endValidation ? (
-                      <AfterRunAnounce setCodeValidation={setCodeValidation} />
-                    ) : (
-                      <TimeOutput />
-                    )}
-                  </OutputWrapper>
-                ) : (
-                  <CodeInput
-                    codeValidation={codeValidation}
-                    setCodeValidation={setCodeValidation}
-                  />
-                )}
-              </ContentWrapper>
-            </AppWrapper>
-          }
-        ></Route>
-        <Route
-          path="overlay"
-          element={
-            <OverlayPlaceWrapper>
-              <AppWrapper2>
-                <WinRate />
-              </AppWrapper2>
-            </OverlayPlaceWrapper>
-          }
-        ></Route>
-      </Routes>
-    </BrowserRouter>
+    <Provider store={Store}>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="app"
+            element={
+              <AppWrapper>
+                <Header />
+                <ContentWrapper>
+                  <ReplayInput codeValidation={codeValidation} />
+                  {codeValidation ? (
+                    <OutputWrapper>
+                      {endValidation ? (
+                        <AfterRunAnounce
+                          setCodeValidation={setCodeValidation}
+                        />
+                      ) : (
+                        <TimeOutput />
+                      )}
+                    </OutputWrapper>
+                  ) : (
+                    <CodeInput
+                      codeValidation={codeValidation}
+                      setCodeValidation={setCodeValidation}
+                    />
+                  )}
+                </ContentWrapper>
+              </AppWrapper>
+            }
+          ></Route>
+          <Route
+            path="overlay"
+            element={
+              <OverlayPlaceWrapper>
+                <AppWrapper2>
+                  <WinRate />
+                </AppWrapper2>
+              </OverlayPlaceWrapper>
+            }
+          ></Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 };
 
