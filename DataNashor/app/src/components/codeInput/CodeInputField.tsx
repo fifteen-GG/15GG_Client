@@ -11,14 +11,14 @@ interface propsType {
 }
 
 export const CodeInputField = (props: propsType) => {
-  var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi;
+  var regExp = /^[a-zA-Z0-9]*$/;
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>, index: number) => {
     let updatedCode = [...props.code];
     updatedCode[index] = e.target.value.toUpperCase();
     //특수문자 입력 제한
-    if (regExp.test(updatedCode[index])) {
-      updatedCode[index] = updatedCode[index].replace(regExp, '');
+    if (!regExp.test(updatedCode[index])) {
+      updatedCode[index] = updatedCode[index].replace(updatedCode[index], '');
     }
     props.setCode(updatedCode);
 
@@ -33,17 +33,17 @@ export const CodeInputField = (props: propsType) => {
         return (
           <InputField
             type={'text'}
-            ref={(elem) => (ref.current[i] = elem!)}
+            ref={elem => (ref.current[i] = elem!)}
             maxLength={1}
             key={i}
             value={props.code[i]}
-            onChange={(e) => {
+            onChange={e => {
               handleInput(e, i);
-              if (e.target.value.length >= 1 && !regExp.test(e.target.value)) {
+              if (e.target.value.length >= 1 && regExp.test(e.target.value)) {
                 if (i < 5) ref.current[i + 1]!.focus();
               }
             }}
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === 'Backspace' && props.code[i] === '') {
                 if (i > 0) ref.current[i - 1]!.focus();
               }

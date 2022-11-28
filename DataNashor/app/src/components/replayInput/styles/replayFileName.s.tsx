@@ -8,7 +8,7 @@ export const ReplayFileNameWrapper = styled.div`
   height: 64px;
   margin-top: 16px;
 `;
-export const InputField = styled.div<propsType>`
+export const DropZone = styled.div<propsType>`
   display: flex;
   height: 100%;
   width: 100%;

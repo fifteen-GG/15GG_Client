@@ -1,19 +1,9 @@
 import { ReplayPreviewWrapper } from './styles/replayPreview.s';
-import {
-  UsersInfoWrapper,
-  TeamWrapper,
-  UserWrapper,
-  UserImgWrapper,
-  UserImg,
-  UserName,
-  Team,
-} from './styles/gameInfo.s';
 import { UsersInfo } from './UsersInfo';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { urlGameData } from '../utils/Url';
-import Lottie from 'lottie-react';
-import { lottie } from '../../assets';
+import GGLoading from 'lottie-react';
+import * as GG_LOADING_KHAZIX from '../../assets/svg/GG_khazix.json';
 
 interface userData {
   summonerName: string;
@@ -32,7 +22,7 @@ interface fileData {
 }
 
 export const GameInfo = (props: fileData) => {
-  async function getData() {
+  const getData = async () => {
     try {
       //응답 성공
       const response = await axios.get(
@@ -44,10 +34,11 @@ export const GameInfo = (props: fileData) => {
       //응답 실패
       console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     getData();
+    console.log(process.env.REACT_APP_OPGG_API_ROOT);
   }, [props]);
 
   const [game, setGame] = useState<gameData>();
@@ -57,8 +48,8 @@ export const GameInfo = (props: fileData) => {
     <ReplayPreviewWrapper sort={loading}>
       {loading ? (
         <>
-          <Lottie
-            animationData={lottie}
+          <GGLoading
+            animationData={GG_LOADING_KHAZIX}
             style={{ width: '60px', height: '60px' }}
           />
           데이터 불러오는 중...

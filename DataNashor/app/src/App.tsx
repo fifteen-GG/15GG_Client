@@ -54,6 +54,9 @@ const AppWrapper2 = styled.div`
 `;
 
 const App = () => {
+  const [isValidatedCode, setIsValidatedCode] = useState<boolean>(false);
+  const [endValidation, setEndValidation] = useState<boolean>(false);
+  const [isFileInput, setIsFileInput] = useState<boolean>(false);
   const [codeValidation, setCodeValidation] = useState(false);
   const [endValidation, setEndValidation] = useState(false);
   const liveStatus = useSelector((state: any) => state.liveStatus);
@@ -79,8 +82,11 @@ const App = () => {
             <AppWrapper>
               <Header />
               <ContentWrapper>
-                <ReplayInput codeValidation={codeValidation} />
-                {codeValidation ? (
+                <ReplayInput
+                  isValidatedCode={isValidatedCode}
+                  setIsFileInput={setIsFileInput}
+                />
+                {isValidatedCode ? (
                   <OutputWrapper>
                     {endValidation ? (
                       <AfterRunAnounce setCodeValidation={setCodeValidation} />
