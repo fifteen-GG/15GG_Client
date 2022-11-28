@@ -18,9 +18,8 @@ const CodeInputHeader = () => {
   return <CodeInputHeaderWrapper>데이터 코드 입력</CodeInputHeaderWrapper>;
 };
 interface propsType {
-  isValidatedCode: boolean;
-  setIsValidatedCode: React.Dispatch<React.SetStateAction<boolean>>;
-  isFileInput: boolean;
+  codeValidation: boolean;
+  setCodeValidation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export const CodeInput = (props: propsType) => {
   const [code, setCode] = useState(['', '', '', '', '', '']);

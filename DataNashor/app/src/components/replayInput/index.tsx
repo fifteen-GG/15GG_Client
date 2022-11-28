@@ -6,11 +6,10 @@ import {
   ReplayInputHeader,
   ReplayInputWrapper,
 } from './styles/replayInput.s';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface propsType {
-  isValidatedCode: boolean;
-  setIsFileInput: Function;
+  codeValidation: boolean;
 }
 interface fileInfoType {
   fileName: string;
@@ -18,6 +17,7 @@ interface fileInfoType {
 }
 export const ReplayInput = (props: propsType) => {
   //서버 사용을 위해 파일명과 파일경로 state로 뽑아오기..
+  const [response, setResponse] = useState(Boolean);
   const [fileInfo, setFileInfo] = useState<fileInfoType>({
     fileName: '',
     filePath: '',
@@ -25,7 +25,7 @@ export const ReplayInput = (props: propsType) => {
 
   return (
     <ReplayInputWrapper>
-      {props.isValidatedCode ? (
+      {props.codeValidation ? (
         <ReplayInputHeader>
           데이터 분석중 <RealTimeInfo>실시간</RealTimeInfo>
         </ReplayInputHeader>
@@ -37,10 +37,7 @@ export const ReplayInput = (props: propsType) => {
       ) : (
         <GameInfo fileName={fileInfo.fileName} />
       )}
-      <ReplayFileName
-        setFileInfo={setFileInfo}
-        setIsFileInput={props.setIsFileInput}
-      />
+      <ReplayFileName setFileInfo={setFileInfo} />
     </ReplayInputWrapper>
   );
 };

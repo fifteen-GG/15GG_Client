@@ -7,57 +7,50 @@ import {
   UserName,
   Team,
 } from './styles/gameInfo.s';
+import { urlChampion } from '../utils/Url';
 
-interface playerInfo {
+interface userData {
   summonerName: string;
   championName: string;
   individualPosition: string;
   teamPosition: string;
 }
-interface gameInfo {
+interface gameData {
   gameVersion: string;
-  red: playerInfo[];
-  blue: playerInfo[];
+  red: userData[];
+  blue: userData[];
   gameCreation: string;
 }
 interface propsType {
-  game: gameInfo;
+  game: gameData;
 }
 
 export const UsersInfo = (props: propsType) => {
   return (
     <UsersInfoWrapper>
       <TeamWrapper>
-        {props.game?.red.map(({ championName, summonerName }, i) => {
+        {props.game?.red.map((_, i) => {
           return (
             <UserWrapper key={i}>
               <UserImgWrapper>
-                <UserImg
-                  src={`${process.env.REACT_APP_OPGG_API_ROOT}/images/lol/champion/${championName}.png`}
-                />
+                <UserImg src={urlChampion(props.game.red[i].championName)} />
               </UserImgWrapper>
               <UserName team={Team.RED}>
-                {summonerName.length > 3
-                  ? summonerName.slice(0, 3) + '...'
-                  : summonerName}
+                {props.game.red[i].summonerName}
               </UserName>
             </UserWrapper>
           );
         })}
       </TeamWrapper>
       <TeamWrapper>
-        {props.game?.blue.map(({ championName, summonerName }, i) => {
+        {props.game?.blue.map((_, i) => {
           return (
             <UserWrapper key={i}>
               <UserName team={Team.BLUE}>
-                {summonerName.length > 3
-                  ? summonerName.slice(0, 3) + '...'
-                  : summonerName}
+                {props.game.blue[i].summonerName}
               </UserName>
               <UserImgWrapper>
-                <UserImg
-                  src={`${process.env.REACT_APP_OPGG_API_ROOT}/images/lol/champion/${championName}.png`}
-                />
+                <UserImg src={urlChampion(props.game.blue[i].championName)} />
               </UserImgWrapper>
             </UserWrapper>
           );
