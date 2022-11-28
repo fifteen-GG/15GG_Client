@@ -1,7 +1,9 @@
-const { app, BrowserWindow } = require("electron");
-const path = require("path");
-const isDev = require("electron-is-dev");
-const { overlayWindow } = require("electron-overlay-window");
+const { app, BrowserWindow, ipcMain, webContents } = require('electron');
+const path = require('path');
+const url = require('url');
+const isDev = require('electron-is-dev');
+const { overlayWindow } = require('electron-overlay-window');
+const log = require('electron-log');
 
 app.disableHardwareAcceleration();
 let mainWindow;
@@ -16,6 +18,7 @@ function createWindow() {
       nodeIntegration: true,
       enableRemoteModule: true,
       devTools: isDev,
+      contextIsolation: false, // to allow require in renderer
     },
   });
 
@@ -28,6 +31,7 @@ function createWindow() {
       nodeIntegration: true,
       enableRemoteModule: true,
       devTools: isDev,
+      contextIsolation: false, // to allow require in renderer
     },
     parent: mainWindow,
     ...overlayWindow.WINDOW_OPTS,
@@ -35,46 +39,109 @@ function createWindow() {
 
   mainWindow.loadURL(
     isDev
-      ? "http://localhost:3000/app"
-      : `file://${path.join(__dirname, "../build/index.html")}`,
+      ? 'http://localhost:3000/app'
+      : `file://${path.join(__dirname, '../build/index.html')}`,
   );
 
   window2.loadURL(
     isDev
-      ? "http://localhost:3000/overlay"
-      : `file://${path.join(__dirname, "../build/index.html")}`,
+      ? 'http://localhost:3000/overlay'
+      : `file://${path.join(__dirname, '../build/index.html')}`,
   );
 
   if (isDev) {
-    mainWindow.webContents.openDevTools({ mode: "detach" });
+    mainWindow.webContents.openDevTools({ mode: 'detach' });
 
-    window2.webContents.openDevTools({ mode: "detach", activate: false });
-    overlayWindow.attachTo(window2, "제목 없음 - Windows 메모장");
-    overlayWindow.on("focus", ev => {
-      console.log("focus", ev);
+    window2.webContents.openDevTools({ mode: 'detach', activate: false });
+    // overlayWindow.attachTo(window2, '제목 없음 - Windows 메모장');
+    overlayWindow.attachTo(window2, 'League of Legends (TM) Client');
+    overlayWindow.on('focus', ev => {
+      console.log('focus', ev);
     });
   }
 
   mainWindow.setResizable(true);
-  mainWindow.on("closed", () => (mainWindow = null));
+  mainWindow.on('closed', () => (mainWindow = null));
   mainWindow.focus();
-  window2.on("closed", () => (window2 = null));
+  window2.on('closed', () => (window2 = null));
   window2.focus();
 }
 
-app.on("ready", createWindow);
+app.on('ready', createWindow);
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-app.on("activate", () => {
+app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
   if (window2 === null) {
     createWindow();
   }
+});
+
+let cache = {
+  data: undefined,
+};
+let hiddenWindow;
+let currentPid;
+
+ipcMain.on('START_BACKGROUND_VIA_MAIN', (event, args) => {
+  console.log('listening');
+  const backgroundFileUrl = url.format({
+    pathname: path.join(__dirname, `../background_tasks/background.html`),
+    protocol: 'file:',
+    slashes: true,
+  });
+  hiddenWindow = new BrowserWindow({
+    show: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+  hiddenWindow.loadURL(backgroundFileUrl);
+
+  hiddenWindow.webContents.openDevTools();
+
+  hiddenWindow.on('closed', () => {
+    hiddenWindow = null;
+  });
+
+  cache.data = args.number;
+  console.log('cache.data', cache.data);
+});
+
+ipcMain.on('MSG_FROM_BACKGROUND', (event, args) => {
+  console.log('electron.js MSG_FROM_BACKGROUND', args);
+  mainWindow.webContents.send('MESSAGE_FROM_BACKGROUND_VIA_MAIN', args.message);
+});
+
+ipcMain.on('PID_FROM_BACKGROUND', (event, args) => {
+  currentPid = args.message;
+  log.info('Started background process with PID', currentPid);
+  mainWindow.webContents.send('PID_FROM_BACKGROUND_VIA_MAIN', args.message);
+});
+
+ipcMain.on('MATCH_FROM_BACKGROUND', (event, args) => {
+  matchName = args.message;
+  log.info('Match ID with name', matchName);
+  window2.webContents.send('MATCH_FROM_BACKGROUND', { matchName });
+});
+
+ipcMain.on('STATUS_FROM_BACKGROUND', (event, args) => {
+  gameStatus = args.message;
+  log.info('Start Status', gameStatus);
+  window2.webContents.send('STATUS_FROM_BACKGROUND', { gameStatus });
+});
+
+ipcMain.on('BACKGROUND_READY', (event, args) => {
+  event.reply('START_PROCESSING', {
+    data: cache.data,
+    currentPid: currentPid,
+  });
 });

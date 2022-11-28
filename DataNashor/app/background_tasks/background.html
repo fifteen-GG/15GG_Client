@@ -1,0 +1,40 @@
+<script>
+  const { PythonShell } = require('python-shell');
+  const { ipcRenderer } = require('electron');
+  const path = require('path');
+  const log = require('electron-log');
+
+  console.log = log.log;
+  ipcRenderer.on('START_PROCESSING', (event, args) => {
+    let lastPid = args.currentPid;
+    log.info('value of lastPid', lastPid);
+    if (lastPid) {
+      try {
+        process.kill(lastPid);
+      } catch (e) {
+        log.info('error on process.kill:', e);
+      }
+    }
+
+    console.log('html START_PROCESSING', args);
+    const { data } = args;
+    let pyshell = new PythonShell(
+      path.join(__dirname, '/../scripts/parser.py'),
+      {
+        pythonPath: 'python',
+        args: [data],
+      },
+    );
+
+    lastPid = pyshell.childProcess.pid;
+    log.info('starting process with pid: ', lastPid);
+    ipcRenderer.send('PID_FROM_BACKGROUND', { message: lastPid });
+
+    pyshell.on('message', function (results) {
+      console.log('html message', results);
+      ipcRenderer.send('MSG_FROM_BACKGROUND', { message: results });
+    });
+  });
+
+  ipcRenderer.send('BACKGROUND_READY');
+</script>

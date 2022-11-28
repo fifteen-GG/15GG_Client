@@ -1,5 +1,6 @@
-import styled from "styled-components";
-import * as Palette from "../../../assets/colorPalette";
+import styled from 'styled-components';
+import * as Palette from '../../../assets/colorPalette';
+import gg_logo_full from '../../../assets/svg/gg_logo_full.svg';
 
 export const HeaderWrapper = styled.div`
   display: flex;
@@ -8,7 +9,7 @@ export const HeaderWrapper = styled.div`
   background-color: ${Palette.NASHOR_GRAY};
 `;
 
-export const LogoWrapper = styled.div`
+export const LogoWrapper = styled.img`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,4 +19,6 @@ export const LogoWrapper = styled.div`
   height: 52px;
   width: 110px;
   margin-left: 24px;
+  src: ${gg_logo_full};
+  object-fit: contain;
 `;

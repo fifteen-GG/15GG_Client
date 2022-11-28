@@ -7,9 +7,11 @@ import { TimeOutput } from './components/timeoutput/AnalysisTime';
 import { WinRate } from './components/winRate';
 import { AfterRunAnounce } from './components/timeoutput/AnalysisDone';
 import { OutputWrapper } from './components/timeoutput/styles/analysisTime.s';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import backGround from './assets/svg/nashor_or_bg.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLiveStatus } from './redux/Actions';
 
 const AppWrapper = styled.div`
   box-sizing: border-box;
@@ -34,14 +36,14 @@ const OverlayPlaceWrapper = styled.div`
   display: flex;
   width: 100%;
   height: 100vh;
-  // background-color: red;
+  justify-content: flex-end;
 `;
 
 const AppWrapper2 = styled.div`
-  // margin-left: 2050px;
-  margin-left: 1000px;
-  margin-top: 50px;
+  margin-right: 8%;
+  margin-top: 5%;
   box-sizing: border-box;
+  justify-contents: flex-end;
   display: flex;
   flex-direction: column;
   background-image: url(${backGround});
@@ -56,6 +58,20 @@ const App = () => {
   const [endValidation, setEndValidation] = useState<boolean>(false);
   const [isFileInput, setIsFileInput] = useState<boolean>(false);
   const [codeValidation, setCodeValidation] = useState(false);
+  const [endValidation, setEndValidation] = useState(false);
+  const liveStatus = useSelector((state: any) => state.liveStatus);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(liveStatus);
+    // if (liveStatus === 2) {
+    //   console.log(
+    //     'askdfjasiojfisadojfiaosjfoasjfajoisfdijsafiaosdfjasidofjisao',
+    //   );
+    //   setEndValidation(true);
+    //   dispatch(setLiveStatus(2));
+    // }
+  }, [liveStatus]);
 
   return (
     <BrowserRouter>
@@ -73,18 +89,15 @@ const App = () => {
                 {isValidatedCode ? (
                   <OutputWrapper>
                     {endValidation ? (
-                      <AfterRunAnounce
-                        setIsValidatedCode={setIsValidatedCode}
-                      />
+                      <AfterRunAnounce setCodeValidation={setCodeValidation} />
                     ) : (
                       <TimeOutput />
                     )}
                   </OutputWrapper>
                 ) : (
                   <CodeInput
-                    isValidatedCode={isValidatedCode}
-                    setIsValidatedCode={setIsValidatedCode}
-                    isFileInput={isFileInput}
+                    codeValidation={codeValidation}
+                    setCodeValidation={setCodeValidation}
                   />
                 )}
               </ContentWrapper>

@@ -1,5 +1,5 @@
 import { CodeInputField } from './CodeInputField';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   CodeHelpLink,
   CodeHelpMsg,
@@ -8,6 +8,11 @@ import {
   CodeInputWrapper,
   StartAnalysisButton,
 } from './styles/codeInput.s';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
 
 const CodeInputHeader = () => {
   return <CodeInputHeaderWrapper>데이터 코드 입력</CodeInputHeaderWrapper>;
@@ -21,13 +26,55 @@ export const CodeInput = (props: propsType) => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const dummyCode = ['1', '2', 'A', 'B', 'C', '3'];
   const [inputBoxInit, setInputBoxInit] = useState(true);
-  const onClick = () => {
-    {
-      JSON.stringify(code) === JSON.stringify(dummyCode) && props.isFileInput
-        ? props.setIsValidatedCode(true)
-        : setInputBoxInit(false);
+  const [isValidated, setIsValidated] = useState(false);
+  const replayName = useSelector((state: any) => state.replayName);
+
+  const validateCode = async (code: string, matchId: string) => {
+    console.log(code, matchId);
+    const response = await axios.post(
+      `${process.env.REACT_APP_GG_API_ROOT}` + 'code/update/match_id',
+      { code: code, match_id: matchId },
+      { headers: { 'Content-Type': 'application/json' } },
+    );
+    if (response.status === 200) {
+      setIsValidated(true);
+      console.log('code validated');
+    } else {
+      setIsValidated(false);
     }
   };
+
+  const onClick = () => {
+    validateCode(
+      code.join(''),
+      replayName.replace('.rofl', '').replace('-', '_'),
+    );
+    // if (isValidated) {
+    //   props.setCodeValidation(true);
+    //   console.log(replayName);
+    //   ipcRenderer.send('START_BACKGROUND_VIA_MAIN', { number: replayName });
+    //   ipcRenderer.send('STATUS_FROM_BACKGROUND', { message: 1 });
+    //   ipcRenderer.on('START_PROCESSING', (event: any, args: any) => {
+    //     console.log('app.tsx START_PROCESSING', args.message);
+    //   });
+    // } else {
+    //   setInputBoxInit(false);
+    // }
+  };
+
+  useEffect(() => {
+    if (isValidated) {
+      props.setCodeValidation(true);
+      console.log(replayName);
+      ipcRenderer.send('START_BACKGROUND_VIA_MAIN', { number: replayName });
+      ipcRenderer.send('STATUS_FROM_BACKGROUND', { message: 1 });
+      ipcRenderer.on('START_PROCESSING', (event: any, args: any) => {
+        console.log('app.tsx START_PROCESSING', args.message);
+      });
+    } else {
+      setInputBoxInit(false);
+    }
+  }, [isValidated]);
 
   return (
     <CodeInputWrapper>

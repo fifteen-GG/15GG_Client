@@ -29,7 +29,9 @@ export const WinningRate = styled.div`
   font-weight: 900;
 `;
 export const GraphTitle = styled.div`
+  position: absolute;
   margin-top: 2px;
   font-size: 14px;
+  margin-left: 142px;
   color: ${Palette.NASHOR_WHITE};
 `;

@@ -26,9 +26,7 @@ export const GameInfo = (props: fileData) => {
     try {
       //응답 성공
       const response = await axios.get(
-        `${
-          process.env.REACT_APP_GG_API_ROOT
-        }/riot/match/preview/${props.fileName.replace('.rofl', '')}`,
+        urlGameData(props.fileName.replace('.rofl', '').replace('-', '_')),
       );
       setGame(response.data as gameData);
       setLoading(false);

@@ -5,14 +5,19 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import { DropZone } from './styles/replayFileName.s';
 import { useState } from 'react';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { setReplayName } from '../../redux/Actions';
+
+const { ipcRenderer } = window.require('electron');
+
 export interface TargetBoxProps {
   onDrop: (item: { files: File[] }) => void;
   setFileInfo: Function;
 }
 
 export const TargetBox: FC<TargetBoxProps> = props => {
-  let [anouncement, setAnouncement] =
-    useState<string>('드래그 해서 파일 업로드');
+  const dispatch = useDispatch();
+  let [anouncement, setAnouncement] = useState('드래그 해서 파일 업로드');
   const { onDrop } = props;
   const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
@@ -42,8 +47,10 @@ export const TargetBox: FC<TargetBoxProps> = props => {
       filePath: `${e.target.files[0].path}`,
     });
     setAnouncement(e.target.files[0].name);
-    console.log(e.target.files[0].name);
-    console.log(e.target.files[0].path);
+    dispatch(setReplayName(e.target.files[0].name));
+    ipcRenderer.send('MATCH_FROM_BACKGROUND', {
+      message: e.target.files[0].name,
+    });
   };
 
   return (
