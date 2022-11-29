@@ -1,7 +1,7 @@
 from datanashor.parser import ReplayClient
 import sys
 # import grequests
-# import requests
+import requests
 import httpx
 import os
 import json
@@ -30,7 +30,7 @@ player_data_keys = [
 
 
 async def nashor_client():
-    uri = "ws://3.36.71.186:8000/api/v1/socket/analyze"
+    uri = "ws://43.201.8.37:8000/api/v1/socket/analyze"
     loaded = False
     game_time_count = 0
     prev_game_time = 0
@@ -114,7 +114,9 @@ async def nashor_client():
                 else:
                     print(e)
                     break
-
+headers = {'Content-Type': 'application/json'}
+print(requests.post('http://43.201.8.37:8000/api/v1/match/update/status', json={"match_id": match_id.replace('-', '_'), "status": 1}, headers=headers ))
 asyncio.run(nashor_client())
+# print(requests.post('http://3.36.71.186:8000/api/v1/match/update/status', json={"match_id": match_id.replace('-', '_'), "status": 2}, headers=headers ))
 
 # todo 앞뒤로 api 요청
