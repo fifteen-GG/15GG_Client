@@ -23,19 +23,24 @@ interface propsType {
 }
 export const CodeInput = (props: propsType) => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
-  const dummyCode = ['1', '2', 'A', 'B', 'C', '3'];
   const [inputBoxInit, setInputBoxInit] = useState(true);
   const [isValidated, setIsValidated] = useState(false);
+  const [matchCount, setMatchCount] = useState(0);
   const replayName = useSelector((state: any) => state.replayName);
 
   const validateCode = async (code: string, matchId: string) => {
     console.log(code, matchId);
+    const response1 = await axios.post(
+      `${process.env.REACT_APP_GG_API_ROOT}` + 'match/update/status',
+      { match_id: matchId, status: 1 },
+      { headers: { 'Content-Type': 'application/json' } },
+    );
     const response = await axios.post(
       `${process.env.REACT_APP_GG_API_ROOT}` + 'code/update/match_id',
       { code: code, match_id: matchId },
       { headers: { 'Content-Type': 'application/json' } },
     );
-    if (response.status === 200) {
+    if (response.status === 200 && response1.status === 200) {
       setIsValidated(true);
       console.log('code validated');
     } else {
@@ -44,21 +49,11 @@ export const CodeInput = (props: propsType) => {
   };
 
   const onClick = () => {
+    setMatchCount(matchCount + 1);
     validateCode(
       code.join(''),
       replayName.replace('.rofl', '').replace('-', '_'),
     );
-    // if (isValidated) {
-    //   props.setCodeValidation(true);
-    //   console.log(replayName);
-    //   ipcRenderer.send('START_BACKGROUND_VIA_MAIN', { number: replayName });
-    //   ipcRenderer.send('STATUS_FROM_BACKGROUND', { message: 1 });
-    //   ipcRenderer.on('START_PROCESSING', (event: any, args: any) => {
-    //     console.log('app.tsx START_PROCESSING', args.message);
-    //   });
-    // } else {
-    //   setInputBoxInit(false);
-    // }
   };
 
   useEffect(() => {
@@ -71,7 +66,9 @@ export const CodeInput = (props: propsType) => {
         console.log('app.tsx START_PROCESSING', args.message);
       });
     } else {
-      setInputBoxInit(false);
+      if (code[5] !== '') {
+        setInputBoxInit(false);
+      }
     }
   }, [isValidated]);
 

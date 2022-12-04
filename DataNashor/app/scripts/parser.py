@@ -115,7 +115,7 @@ async def nashor_client():
                     print(e)
                     break
 headers = {'Content-Type': 'application/json'}
-print(requests.post('http://43.201.8.37:8000/api/v1/match/update/status', json={"match_id": match_id.replace('-', '_'), "status": 1}, headers=headers ))
+# print(requests.post('http://43.201.8.37:8000/api/v1/match/update/status', json={"match_id": match_id.replace('-', '_'), "status": 1}, headers=headers ))
 asyncio.run(nashor_client())
 # print(requests.post('http://3.36.71.186:8000/api/v1/match/update/status', json={"match_id": match_id.replace('-', '_'), "status": 2}, headers=headers ))
 

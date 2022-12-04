@@ -9,6 +9,8 @@ node_modules
 /coverage
 
 /build
+/DataNashor/app/build
+/DataNashor/app/dist
 
 .DS_Store
 .env.local

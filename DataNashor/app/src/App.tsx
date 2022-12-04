@@ -59,16 +59,16 @@ const App = () => {
   const liveStatus = useSelector((state: any) => state.liveStatus);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(liveStatus);
-    // if (liveStatus === 2) {
-    //   console.log(
-    //     'askdfjasiojfisadojfiaosjfoasjfajoisfdijsafiaosdfjasidofjisao',
-    //   );
-    //   setEndValidation(true);
-    //   dispatch(setLiveStatus(2));
-    // }
-  }, [liveStatus]);
+  // useEffect(() => {
+  //   console.log(liveStatus);
+  //   // if (liveStatus === 2) {
+  //   //   console.log(
+  //   //     'askdfjasiojfisadojfiaosjfoasjfajoisfdijsafiaosdfjasidofjisao',
+  //   //   );
+  //   //   setEndValidation(true);
+  //   //   dispatch(setLiveStatus(2));
+  //   // }
+  // }, [liveStatus]);
 
   return (
     <BrowserRouter>
