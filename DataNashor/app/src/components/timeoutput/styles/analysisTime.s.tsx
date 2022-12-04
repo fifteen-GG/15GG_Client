@@ -54,3 +54,12 @@ export const Announcement = styled.div`
   font-size: 12px;
   font-weight: 500;
 `;
+export const Initialize = styled.div`
+  margin-top: 130px;
+  font-size: 12px;
+  font-weight: 500px;
+  color: ${Palette.NASHOR_GRAY_TEXT};
+  :hover {
+    text-decoration: underline;
+  }
+`;

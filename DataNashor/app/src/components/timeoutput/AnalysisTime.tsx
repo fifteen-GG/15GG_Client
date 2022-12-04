@@ -6,11 +6,16 @@ import {
   OutputFieldWithColonWrapper,
   OutputField,
   Announcement,
+  Initialize,
 } from './styles/analysisTime.s';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLiveStatus } from '../../redux/Actions';
 
-export const TimeOutput = () => {
+interface propsType {
+  setCodeValidation: Function;
+}
+
+export const TimeOutput = (props: propsType) => {
   const [time, setTime] = useState(['0', '0', '0', '0']);
   const [responseMessage, setResponseMessage] = useState('');
   const [winRate, setWinRate] = useState(50);
@@ -52,7 +57,6 @@ export const TimeOutput = () => {
   useEffect(() => {
     const ws = new WebSocket(
       `${process.env.REACT_APP_GG_WS_ROOT}` + 'match/' + `${matchId}`,
-      // `${process.env.REACT_APP_GG_WS_ROOT}` + 'test',
     );
     console.log(
       `${process.env.REACT_APP_GG_WS_ROOT}` + 'match/' + `${matchId}`,
@@ -109,6 +113,13 @@ export const TimeOutput = () => {
         })}
       </OutputFieldWrapper>
       <Announcement>실시간 분석 진행중...</Announcement>
+      <Initialize
+        onClick={() => {
+          props.setCodeValidation(false);
+        }}
+      >
+        다른 게임 분석하기
+      </Initialize>
     </>
   );
 };
